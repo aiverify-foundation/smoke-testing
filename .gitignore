@@ -131,7 +131,7 @@ dist
 
 # Playwright Results
 /node_modules/
-/tests/test-results/
+/test-results/
 /playwright-report/
 /playwright/.cache/
 results.xml
