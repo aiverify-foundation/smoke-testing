@@ -1,0 +1,17 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="43.38508800000046">
+<testsuite name="smoke.spec.js" timestamp="1683965777710" hostname="" tests="1" failures="0" skipped="0" time="43.045" errors="0">
+<testcase name="test" classname="[chromium] › smoke.spec.js › test" time="43.045">
+<system-out>
+<![CDATA[Add Dataset
+Add Model
+Create A Project
+Configure Global Variables
+Add a page
+Input Blocks & Technical Test
+Report Generation
+Asserting Values
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
