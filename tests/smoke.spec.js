@@ -79,7 +79,7 @@ test('test', async () => {
 
   // Drag Widgets and Process Checklist
   await page.getByRole('button', { name: 'AI Verify Process Checklist' }).click();
-  await page.locator('div:nth-child(2) > .leftpanel_widgetHeadingWrapper__ZJVYO > .leftpanel_draggableHandleIconWrapper__oeh3h').first().dragTo(page.locator('div.react-grid-layout'));
+  await page.getByRole('region').getByTestId('DragIndicatorIcon').first().dragTo(page.locator('div.react-grid-layout'));
 
   // Add a page
   console.log('Add a page')
@@ -88,7 +88,7 @@ test('test', async () => {
   // Add Process Checklist
   await page.getByRole('button', { name: 'Widgets for Fairness Metrics Toolbox' }).click();
   await page.getByText('introduction to Fairness Metrics Toolbox for Classification').click();
-  await page.locator('div:nth-child(4) > .leftpanel_widgetHeadingWrapper__ZJVYO > .leftpanel_draggableHandleIconWrapper__oeh3h').first().dragTo(page.locator('div.react-grid-layout'));
+  await page.getByRole('region').getByTestId('DragIndicatorIcon').first().dragTo(page.locator('div.react-grid-layout'));
   await page.locator('.react-grid-layout').click();
   await page.getByText('Next').click();
 
@@ -150,8 +150,6 @@ test('test', async () => {
   expect(projectInfoObj[0].projectInfo.reportTitle).toBe(reportTitle)
   expect(projectInfoObj[0].projectInfo.company).toBe(companyName)
   expect(projectInfoObj[0].pages).toBeNull
-
-  console.log(projectInfoObj[0].pages)
 
   // Get Project ID
   const projectId = projectInfoObj[0]._id
