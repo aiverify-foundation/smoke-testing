@@ -40,7 +40,7 @@ const config = {
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [ 
     ['list'],
-    ['html', { outFolder: 'test-results', open: 'never'}],
+    ['html', { outFolder: 'test-results', open: 'open'}],
     ['junit', testRailOptions ]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
