@@ -87,8 +87,7 @@ test('test', async () => {
 
   // Add Process Checklist
   await page.getByRole('button', { name: 'Widgets for Fairness Metrics Toolbox' }).click();
-  await page.getByText('introduction to Fairness Metrics Toolbox for Classification').click();
-  await page.getByRole('region').getByTestId('DragIndicatorIcon').first().dragTo(page.locator('div.react-grid-layout'));
+  await page.getByText('introduction to Fairness Metrics Toolbox for Classification').first().dragTo(page.locator('div.react-grid-layout'));
   await page.locator('.react-grid-layout').click();
   await page.getByText('Next').click();
 
