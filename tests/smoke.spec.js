@@ -11,7 +11,7 @@ test.use({
   ignoreHTTPSErrors: true
 });
 
-test('test', async () => {
+test('Smoke Test', async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
@@ -37,7 +37,7 @@ test('test', async () => {
   await page.getByText('Datasets').click();
   await page.getByRole('button', { name: 'New Dataset +' }).click();
   await page.getByText('Click to Browse').click();
-  await page.locator("input[name='file']").setInputFiles('/home/benflop/GitHub/smoke-testing/fixtures/pickle_pandas_tabular_loan_testing.sav');
+  await page.locator("input[name='file']").setInputFiles('./fixtures/pickle_pandas_tabular_loan_testing.sav');
   await page.getByRole('button', { name: 'Upload selected files >' }).click();
   await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
 
@@ -48,7 +48,7 @@ test('test', async () => {
   await page.getByRole('button', { name: 'upload' }).click();
   await page.getByRole('button', { name: 'Next >' }).click();
   await page.getByText('Click to Browse').click();
-  await page.locator("input[name='file']").setInputFiles('/home/benflop/GitHub/smoke-testing/fixtures/pickle_scikit_multiclasslr_loan.sav');
+  await page.locator("input[name='file']").setInputFiles('./fixtures/pickle_scikit_multiclasslr_loan.sav');
   await page.getByRole('button', { name: 'Upload selected files >' }).click();
   await page.getByRole('button', { name: 'Back to all Models >' }).click();
   await page.getByText('pickle_scikit_multiclasslr_loan.sav').click();
