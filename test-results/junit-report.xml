@@ -1,6 +1,6 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="43.02568699999992">
-<testsuite name="smoke.spec.js" timestamp="1684047041153" hostname="" tests="1" failures="0" skipped="0" time="42.685" errors="0">
-<testcase name="test" classname="[chromium] › smoke.spec.js › test" time="42.685">
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="16.384179000000003">
+<testsuite name="smoke.spec.js" timestamp="1684202191221" hostname="" tests="1" failures="0" skipped="0" time="15.859" errors="0">
+<testcase name="Smoke Test" classname="[chromium] › smoke.spec.js › Smoke Test" time="15.859">
 <system-out>
 <![CDATA[Add Dataset
 Add Model
