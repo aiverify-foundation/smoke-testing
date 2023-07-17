@@ -17,7 +17,7 @@ test('Smoke Test', async () => {
   })
 
   const page = await context.newPage();
-  await page.goto('http://localhost:3000/home');
+  await page.goto('http://127.0.0.1:3000/home');
 
   console.log('Add Dataset')
   await page.getByText('Models & Data').click();
@@ -301,7 +301,7 @@ test('Smoke Test', async () => {
   console.log('Clean Up')
 
   console.log('Delete Project')
-  await page.goto('http://localhost:3000/home');
+  await page.goto('http://127.0.0.1:3000/home');
   await page.getByTestId('aiv-projectcard-delete-project').click();
   await page.getByRole('button', { name: 'Proceed' }).click();
 
