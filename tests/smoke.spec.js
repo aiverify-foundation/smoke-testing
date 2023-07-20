@@ -99,22 +99,19 @@ test('Smoke Test', async () => {
   await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"]').getByRole('button', { name: 'Open' }).click();
   await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
   await page.getByRole('listbox', { name: 'Path of the Background Path' }).click();
-
-  // await page.getByRole('option', { name: '/home/benflop/GitHub/aiverify/setup-aiverify/aiverify-dev/aiverify/uploads/data/pickle_pandas_mock_binary_classification_credit_risk_testing.sav' }).click();
   await page.getByLabel('Size of the Background *').click();
   await page.getByLabel('Size of the Background *').press('End');
   await page.getByLabel('Size of the Background *').press('Insert');
   await page.getByLabel('Size of the Background *').press('Insert');
   await page.getByLabel('Size of the Background *').fill('100');
   await page.getByLabel('Size of the Test Dataset *').click();
-  await page.getByLabel('Size of the Test Dataset *').fill('96');
+  await page.getByLabel('Size of the Test Dataset *').fill('100');
   await page.getByRole('button', { name: 'OK' }).click();
 
   console.log('Robustness Toolbox')
   await page.locator('[id="algocard-aiverify\\.stock\\.robustness_toolbox\\:robustness_toolbox"]').getByRole('button', { name: 'Open' }).click();
   await page.getByRole('button', { name: 'Annotated ground truth path ​' }).click();
   await page.getByRole('listbox', { name: 'Annotated ground truth path' }).click();
-  // await page.getByRole('option', { name: '/home/benflop/GitHub/aiverify/setup-aiverify/aiverify-dev/aiverify/uploads/data/pickle_pandas_mock_binary_classification_credit_risk_testing.sav' }).click();
   await page.getByLabel('Name of column containing image file names').click();
   await page.getByLabel('Name of column containing image file names').fill('default');
   await page.getByRole('button', { name: 'OK' }).click();
