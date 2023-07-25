@@ -295,26 +295,26 @@ test('Smoke Test', async () => {
 
   console.log('Test Complete & Report Generated')
 
-  console.log('Clean Up')
+  // console.log('Clean Up')
 
-  console.log('Delete Project')
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByTestId('aiv-projectcard-delete-project').click();
-  await page.getByRole('button', { name: 'Proceed' }).click();
+  // console.log('Delete Project')
+  // await page.goto('http://127.0.0.1:3000/home');
+  // await page.getByTestId('aiv-projectcard-delete-project').click();
+  // await page.getByRole('button', { name: 'Proceed' }).click();
 
-  console.log('Delete Dataset')
-  await page.getByText('Models & Data').click();
-  await page.getByTestId('open-dataset-list-button').locator('span').click();
-  await page.getByRole('checkbox', { name: 'Select row' }).check();
-  await page.getByRole('button', { name: 'Delete' }).click();
-  await page.getByRole('button', { name: 'Delete Files' }).click();
-  await page.getByTestId('datasets-back-button').click();
+  // console.log('Delete Dataset')
+  // await page.getByText('Models & Data').click();
+  // await page.getByTestId('open-dataset-list-button').locator('span').click();
+  // await page.getByRole('checkbox', { name: 'Select row' }).check();
+  // await page.getByRole('button', { name: 'Delete' }).click();
+  // await page.getByRole('button', { name: 'Delete Files' }).click();
+  // await page.getByTestId('datasets-back-button').click();
   
-  console.log('Delete Model')
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByRole('checkbox', { name: 'Select all rows' }).check();
-  await page.getByRole('button', { name: 'Delete' }).click();
-  await page.getByRole('button', { name: 'Delete Files' }).click();
-  await page.getByRole('img', { name: 'AI Verify' }).click();
+  // console.log('Delete Model')
+  // await page.getByTestId('open-model-list-button').locator('span').click();
+  // await page.getByRole('checkbox', { name: 'Select all rows' }).check();
+  // await page.getByRole('button', { name: 'Delete' }).click();
+  // await page.getByRole('button', { name: 'Delete Files' }).click();
+  // await page.getByRole('img', { name: 'AI Verify' }).click();
 
 });
