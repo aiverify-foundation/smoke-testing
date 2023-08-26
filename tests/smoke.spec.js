@@ -140,7 +140,7 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
 
     console.log('Select Template')
-    await page.getByText('AI Verify Summary Report for Classification ModelAI Verify Summary Report for Cl').click();
+    await page.getByText('AI Verify Summary Report for Classification ModelAI Verify Summary Report for Cl').first().click();
     await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
     await page.getByRole('button', { name: 'Global Variables' }).click();
     await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
