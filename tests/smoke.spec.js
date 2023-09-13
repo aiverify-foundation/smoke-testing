@@ -70,7 +70,7 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
     await page.getByRole('button', { name: 'Global Variables' }).click();
     await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
-  
+
     console.log('Select Dataset & Ground Truth')
     await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
     await page.getByText(testCase.dataFileName).click();
@@ -89,7 +89,7 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     console.log('SHAP ToolBox')
     await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"]').getByRole('button', { name: 'Open' }).click();
     await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
-    await page.getByRole('listbox', { name: 'Path of the Background Path' }).click();
+    await page.getByRole('listbox', { name: 'Path of the Background Path'}).filter({ hasText: 'credit_risk_testing'}).click();
     await page.getByLabel('Size of the Background *').click();
     await page.getByLabel('Size of the Background *').press('End');
     await page.getByLabel('Size of the Background *').press('Insert');
@@ -101,20 +101,23 @@ LOANTESTCASEPARAMS.forEach(testCase =>
 
     console.log('Robustness Toolbox')
     await page.locator('[id="algocard-aiverify\\.stock\\.robustness_toolbox\\:robustness_toolbox"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByRole('button', { name: 'Annotated ground truth path ​' }).click();
-    await page.getByRole('listbox', { name: 'Annotated ground truth path' }).click();
+    await page.getByRole('button', { name: 'Annotated ground truth path' }).click();
+    await page.getByRole('listbox', { name: 'Annotated ground truth path' }).filter({ hasText: 'credit_risk_testing'}).click();
     await page.getByLabel('Name of column containing image file names').click();
     await page.getByLabel('Name of column containing image file names').fill('default');
     await page.getByRole('button', { name: 'OK' }).click();
 
     console.log('Fairness Metrics Toolbox for Classification')
     await page.locator('[id="algocard-aiverify\\.stock\\.fairness_metrics_toolbox_for_classification\\:fairness_metrics_toolbox_for_classification"]').getByRole('button', { name: 'Open' }).click();
-
     await page.getByLabel('sensitive_feature-0 *').click();
     await page.getByLabel('sensitive_feature-0 *').fill("gender");
     await page.getByRole('button', { name: 'Add Item' }).click();
     await page.getByLabel('sensitive_feature-1 *').click();
     await page.getByLabel('sensitive_feature-1 *').fill("race");
+    await page.getByRole('button', { name: 'Annotated labels path' }).click();
+    await page.getByRole('listbox', { name: 'Annotated labels path' }).filter({ hasText: 'credit_risk_testing'}).click();
+    await page.getByLabel('Name of column containing image file names *').click();
+    await page.getByLabel('Name of column containing image file names *').fill('NA');
     await page.getByRole('button', { name: 'OK' }).click();
 
     console.log('Transparency Process Checklist')
@@ -182,7 +185,6 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.getByTestId('completed-7.1.1').nth(1).click();
     await page.getByTestId('completed-7.2.1').nth(1).click();
     await page.getByTestId('completed-7.3.1').nth(1).click();
-    await page.getByTestId('completed-7.4.1').nth(2).click();
     await page.getByTestId('completed-7.4.1').nth(1).click();
     await page.getByTestId('completed-7.4.2').nth(1).click();
     await page.getByTestId('completed-7.5.1').nth(1).click();
