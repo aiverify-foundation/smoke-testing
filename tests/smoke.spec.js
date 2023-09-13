@@ -17,82 +17,10 @@ const LOANTESTCASEPARAMS = [
     groundTruthFilePath: "./fixtures/pickle_pandas_mock_binary_classification_credit_risk_testing.sav",
     modelType: "classification",
     groundTruth: "default"
-  },
-  // {
-  //   dataFileName: "pickle_pandas_tabular_loan_testing.sav",
-  //   dataFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelFileName: "multiclass_classification_loan_sklearn.ensemble._bagging.BaggingClassifier.sav",
-  //   modelFilePath: "/models/sklearn/1.2.2/multiclass_classification_loan_sklearn.ensemble._bagging.BaggingClassifier.sav",
-  //   groundTruthFileName: 'pickle_pandas_tabular_loan_testing.sav',
-  //   groundTruthFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelType: "classification",
-  //   groundTruth: "Interest_Rate"
-  // },
-  // {
-  //   dataFileName: "pickle_pandas_tabular_loan_testing.sav",
-  //   dataFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelFileName: "multiclass_classification_loan_sklearn.tree._classes.DecisionTreeClassifier.sav",
-  //   modelFilePath: "/models/sklearn/1.2.2/multiclass_classification_loan_sklearn.tree._classes.DecisionTreeClassifier.sav",
-  //   groundTruthFileName: 'pickle_pandas_tabular_loan_testing.sav',
-  //   groundTruthFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelType: "classification",
-  //   groundTruth: "Interest_Rate"
-  // },
-  // {
-  //   dataFileName: "pickle_pandas_tabular_loan_testing.sav",
-  //   dataFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelFileName: "multiclass_classification_loan_sklearn.ensemble._gb.GradientBoostingClassifier.sav",
-  //   modelFilePath: "/models/sklearn/1.2.2/multiclass_classification_loan_sklearn.ensemble._gb.GradientBoostingClassifier.sav",
-  //   groundTruthFileName: 'pickle_pandas_tabular_loan_testing.sav',
-  //   groundTruthFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelType: "classification",
-  //   groundTruth: "Interest_Rate"
-  // },
-  // {
-  //   dataFileName: "pickle_pandas_tabular_loan_testing.sav",
-  //   dataFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelFileName: "multiclass_classification_loan_sklearn.ensemble._forest.RandomForestClassifier.sav",
-  //   modelFilePath: "/models/sklearn/1.2.2/multiclass_classification_loan_sklearn.ensemble._forest.RandomForestClassifier.sav",
-  //   groundTruthFileName: 'pickle_pandas_tabular_loan_testing.sav',
-  //   groundTruthFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelType: "classification",
-  //   groundTruth: "Interest_Rate"
-  // },
-  // {
-  //   dataFileName: "pickle_pandas_tabular_loan_testing.sav",
-  //   dataFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelFileName: "multiclass_classification_loan_sklearn.ensemble._bagging.BaggingClassifier.sav",
-  //   modelFilePath: "/models/sklearn/1.2.2/multiclass_classification_loan_sklearn.ensemble._bagging.BaggingClassifier.sav",
-  //   groundTruthFileName: 'pickle_pandas_tabular_loan_testing.sav',
-  //   groundTruthFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelType: "classification",
-  //   groundTruth: "Interest_Rate"
-  // },
-  // {
-  //   dataFileName: "pickle_pandas_tabular_loan_testing.sav",
-  //   dataFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelFileName: "multiclass_classification_loan_sklearn.linear_model._perceptron.Perceptron.sav",
-  //   modelFilePath: "/models/sklearn/1.2.2/multiclass_classification_loan_sklearn.linear_model._perceptron.Perceptron.sav",
-  //   groundTruthFileName: 'pickle_pandas_tabular_loan_testing.sav',
-  //   groundTruthFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelType: "classification",
-  //   groundTruth: "Interest_Rate"
-  // },
-  // {
-  //   dataFileName: "pickle_pandas_tabular_loan_testing.sav",
-  //   dataFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelFileName: "multiclass_classification_loan_sklearn.linear_model._perceptron.Perceptron.sav",
-  //   modelFilePath: "/models/sklearn/1.2.2/multiclass_classification_loan_sklearn.linear_model._perceptron.Perceptron.sav",
-  //   groundTruthFileName: 'pickle_pandas_tabular_loan_testing.sav',
-  //   groundTruthFilePath: "/data/pickle_pandas_tabular_loan_testing.sav",
-  //   modelType: "classification",
-  //   groundTruth: "Interest_Rate"
-  // },
-
-]
+  }]
 
 LOANTESTCASEPARAMS.forEach(testCase =>
-  test(`Smoke Test ${testCase.modelFilePath}`, async () => {
+  test(`Smoke Test`, async () => {
 
     const browser = await chromium.launch();
     const context = await browser.newContext({
@@ -109,7 +37,6 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.getByTestId('open-dataset-list-button').locator('span').click();
     await page.getByTestId('add-new-datasets-button').click();
     await page.getByText('Click to Browse').click();
-    // await page.locator("input[name='file-dropbox']").setInputFiles('./aiverify-test-samples' + testCase.dataFilePath);
     await page.locator("input[name='file-dropbox']").setInputFiles(testCase.dataFilePath);
     await page.getByTestId('upload-datasets-button').click();
     await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
@@ -121,7 +48,6 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.getByText('Upload AI Model').click();
     await page.getByTestId('newmodel-next-button').click();
     await page.getByText('Click to Browse').click();
-    // await page.locator("input[name='file-dropbox']").setInputFiles('./aiverify-test-samples' + testCase.modelFilePath);
     await page.locator("input[name='file']").setInputFiles(testCase.modelFilePath);
     await page.getByTestId('upload-models-button').click();
     await page.getByRole('button', { name: 'Back to all Models >' }).click();
@@ -144,29 +70,7 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
     await page.getByRole('button', { name: 'Global Variables' }).click();
     await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
-    // await page.locator('#varkey-modelName').getByText('User input model name').click();
-    // await page.getByTestId('CloseIcon').click();
-    // await page.getByRole('textbox').nth(2).click();
-    // await page.getByRole('textbox').nth(2).type('modelName');
-    // await page.getByRole('textbox').nth(2).click();
-    // await page.getByRole('textbox').nth(3).type('Binary Classification Model for Credit Risk');
-    // await page.locator('#globalVars button').click();
-    // await page.getByTestId('CloseIcon').click();
-    // await page.getByRole('textbox').nth(2).click();
-    // await page.getByRole('textbox').nth(2).fill('modelPurpose');
-    // await page.getByRole('textbox').nth(2).press('Tab');
-    // await page.getByRole('textbox').nth(3).fill('default the loan');
-    // await page.locator('#globalVars button').click();
-    // await page.locator('.reportWidget_widgetContainer__fenJf > div > div > div:nth-child(2)').click();
-    // await page.locator('#gridItemActionMenu').getByRole('button').nth(1).click();
-    // await page.getByRole('button', { name: '{company}' }).click();
-    // await page.locator('div:nth-child(5) > .listMenu_menuItemContent__Ey0jN').click();
-    // await page.getByRole('button', { name: '{modelName}' }).nth(1).click();
-    // await page.locator('#widgetPropertiesDialog div').filter({ hasText: 'company' }).nth(2).click();
-    // await page.getByRole('button', { name: 'OK' }).click();
-    // await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
-    // await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
-
+  
     console.log('Select Dataset & Ground Truth')
     await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
     await page.getByText(testCase.dataFileName).click();
@@ -403,6 +307,5 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     // await page.getByRole('button', { name: 'Delete' }).click();
     // await page.getByRole('button', { name: 'Delete Files' }).click();
     // await page.getByRole('img', { name: 'AI Verify' }).click();
-
   })
 )
