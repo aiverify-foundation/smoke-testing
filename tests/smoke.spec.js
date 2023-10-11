@@ -87,35 +87,29 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.getByRole('button', { name: 'Use Model' }).click();
 
     console.log('SHAP ToolBox')
-    await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"]').getByRole('button', { name: 'Open' }).click();
+    await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"] div').getByRole('button', { name: 'Open' }).click();
     await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
-    await page.getByRole('listbox', { name: 'Path of the Background Path' }).filter({ hasText: 'credit_risk_testing' }).click();
+    await page.getByRole('option').filter({ hasText: 'credit_risk_testing' }).click()
     await page.getByLabel('Size of the Background *').click();
-    await page.getByLabel('Size of the Background *').press('End');
-    await page.getByLabel('Size of the Background *').press('Insert');
-    await page.getByLabel('Size of the Background *').press('Insert');
     await page.getByLabel('Size of the Background *').fill('100');
     await page.getByLabel('Size of the Test Dataset *').click();
     await page.getByLabel('Size of the Test Dataset *').fill('100');
     await page.getByRole('button', { name: 'OK' }).click();
 
     console.log('Robustness Toolbox')
-    await page.locator('[id="algocard-aiverify\\.stock\\.robustness_toolbox\\:robustness_toolbox"]').getByRole('button', { name: 'Open' }).click();
+    await page.locator('[id="algocard-aiverify\\.stock\\.robustness_toolbox\\:robustness_toolbox"] div').getByRole('button', { name: 'Open' }).click();
     await page.getByRole('button', { name: 'Annotated ground truth path' }).click();
-    await page.getByRole('listbox', { name: 'Annotated ground truth path' }).filter({ hasText: 'credit_risk_testing' }).click();
+    await page.getByRole('option').filter({ hasText: 'credit_risk_testing' }).click();
     await page.getByLabel('Name of column containing image file names').click();
-    await page.getByLabel('Name of column containing image file names').fill('default');
+    await page.getByLabel('Name of column containing image file names').fill('NA');
     await page.getByRole('button', { name: 'OK' }).click();
 
     console.log('Fairness Metrics Toolbox for Classification')
     await page.locator('[id="algocard-aiverify\\.stock\\.fairness_metrics_toolbox_for_classification\\:fairness_metrics_toolbox_for_classification"]').getByRole('button', { name: 'Open' }).click();
     await page.getByLabel('sensitive_feature-0 *').click();
-    await page.getByLabel('sensitive_feature-0 *').fill("gender");
-    await page.getByRole('button', { name: 'Add Item' }).click();
-    await page.getByLabel('sensitive_feature-1 *').click();
-    await page.getByLabel('sensitive_feature-1 *').fill("race");
+    await page.getByLabel('sensitive_feature-0 *').fill('gender');
     await page.getByRole('button', { name: 'Annotated labels path' }).click();
-    await page.getByRole('listbox', { name: 'Annotated labels path' }).filter({ hasText: 'credit_risk_testing' }).click();
+    await page.getByRole('option').filter({ hasText: 'credit_risk_testing' }).click();
     await page.getByLabel('Name of column containing image file names *').click();
     await page.getByLabel('Name of column containing image file names *').fill('NA');
     await page.getByRole('button', { name: 'OK' }).click();
