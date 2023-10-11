@@ -89,7 +89,7 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     console.log('SHAP ToolBox')
     await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"]').getByRole('button', { name: 'Open' }).click();
     await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
-    await page.getByRole('listbox', { name: 'Path of the Background Path'}).filter({ hasText: 'credit_risk_testing'}).click();
+    await page.getByRole('listbox', { name: 'Path of the Background Path' }).filter({ hasText: 'credit_risk_testing' }).click();
     await page.getByLabel('Size of the Background *').click();
     await page.getByLabel('Size of the Background *').press('End');
     await page.getByLabel('Size of the Background *').press('Insert');
@@ -102,7 +102,7 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     console.log('Robustness Toolbox')
     await page.locator('[id="algocard-aiverify\\.stock\\.robustness_toolbox\\:robustness_toolbox"]').getByRole('button', { name: 'Open' }).click();
     await page.getByRole('button', { name: 'Annotated ground truth path' }).click();
-    await page.getByRole('listbox', { name: 'Annotated ground truth path' }).filter({ hasText: 'credit_risk_testing'}).click();
+    await page.getByRole('listbox', { name: 'Annotated ground truth path' }).filter({ hasText: 'credit_risk_testing' }).click();
     await page.getByLabel('Name of column containing image file names').click();
     await page.getByLabel('Name of column containing image file names').fill('default');
     await page.getByRole('button', { name: 'OK' }).click();
@@ -115,7 +115,7 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.getByLabel('sensitive_feature-1 *').click();
     await page.getByLabel('sensitive_feature-1 *').fill("race");
     await page.getByRole('button', { name: 'Annotated labels path' }).click();
-    await page.getByRole('listbox', { name: 'Annotated labels path' }).filter({ hasText: 'credit_risk_testing'}).click();
+    await page.getByRole('listbox', { name: 'Annotated labels path' }).filter({ hasText: 'credit_risk_testing' }).click();
     await page.getByLabel('Name of column containing image file names *').click();
     await page.getByLabel('Name of column containing image file names *').fill('NA');
     await page.getByRole('button', { name: 'OK' }).click();
@@ -247,6 +247,16 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     console.log('Inclusive Growth, Societal & Environmental Well-being Process Checklist')
     await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:inclusive_growth_process_checklist"]').getByRole('button', { name: 'Open' }).click();
     await page.getByTestId('completed-11.1.1').nth(1).click();
+    await page.locator('#aivModal path').click();
+
+    console.log('Organisational Considerations Process Checklist')
+    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:organisational_considerations_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+    await page.getByTestId('completed-12.1.1').first().click();
+    await page.getByTestId('completed-12.2.1').first().click();
+    await page.getByTestId('completed-12.3.1').first().click();
+    await page.getByTestId('completed-12.4.1').first().click();
+    await page.getByTestId('completed-12.5.1').nth(1).click();
+    await page.getByTestId('completed-12.6.1').first().click();
     await page.locator('#aivModal path').click();
 
     console.log('Fairness Tree')
