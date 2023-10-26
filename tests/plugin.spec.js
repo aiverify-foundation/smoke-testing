@@ -87,7 +87,7 @@ test(`FMTC Plugin`, async () => {
   await page.getByLabel('sensitive_feature-1 *').click();
   await page.getByLabel('sensitive_feature-1 *').fill('Home_Owner');
   await page.getByRole('button', { name: 'Annotated labels path' }).click();
-  await page.getByRole('listbox', { name: 'Annotated labels path' }).filter({ hasText: 'loan'}).click();
+  await page.getByRole('listbox', { name: 'Annotated labels path' }).filter({ hasText: 'loan' }).click();
   await page.getByLabel('Name of column containing image file names *').click();
   await page.getByLabel('Name of column containing image file names *').fill('NA');
   await page.getByRole('button', { name: 'OK' }).click();
@@ -458,7 +458,7 @@ test(`Robustness Plugin`, async () => {
   await page.getByRole('button', { name: 'Choose Model' }).click();
   await page.getByText('multiclass_classification_loan_xgboost.sklearn.XGBClassifier.sav').click();
   await page.getByRole('button', { name: 'Use Model' }).click();
-  
+
   console.log('Robustness ToolBox')
   await page.locator('[id="algocard-aiverify\\.stock\\.robustness_toolbox\\:robustness_toolbox"] div').getByRole('button', { name: 'Open' }).click();
   await page.getByRole('button', { name: 'Annotated ground truth path' }).click();
@@ -546,7 +546,7 @@ test(`SHAP Toolbox Plugin`, async () => {
   console.log('SHAP ToolBox')
   await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"] div').getByRole('button', { name: 'Open' }).click();
   await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
-  await page.getByRole('option').filter({ hasText: 'compas'}).click()
+  await page.getByRole('option').filter({ hasText: 'compas' }).click()
   await page.getByLabel('Size of the Background *').click();
   await page.getByLabel('Size of the Background *').fill('100');
   await page.getByLabel('Size of the Test Dataset *').click();
@@ -565,3 +565,450 @@ test(`SHAP Toolbox Plugin`, async () => {
   console.log('Test Complete & Report Generated')
 
 })
+
+test.skip('Pipeline', async () => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    recordVideo: {
+      dir: "./test-results"
+    }
+  })
+
+  const BASEDIR = "./fixtures/prepare-image-files/data/"
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+  await page.getByTestId('open-dataset-list-button').locator('span').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Drag & Drop or Click to Browse').click();
+  await page.getByTestId('upload-folder-button').click();
+  await page.locator("input[name='folder-input']").setInputFiles(BASEDIR + 'raw_fashion_image_10');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.getByText('raw_fashion_image_10').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Drag & Drop or Click to Browse').click();
+  await page.getByTestId('upload-folder-button').click();
+  await page.getByTestId('upload-file-dropbox').click();
+  await page.locator("input[name='file-dropbox']").setInputFiles(BASEDIR + 'pickle_pandas_fashion_mnist_annotated_labels_10.sav');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.locator('.home_header__vrBsY').click();
+  await page.getByText('Models & Data').click();
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.getByText('Upload Pipeline').click();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.getByTestId('upload-file-dropbox').click();
+  await page.locator('div:nth-child(2) > div > div:nth-child(2) > div').first().setInputFiles(['fashionCustomClass.py', 'fashion_mnist_lr_pipeline.sav', 'customClass.cpython-310.pyc']);
+  await page.getByTestId('upload-models-button').click();
+  await page.getByRole('button', { name: 'Back to all Models >' }).click();
+});
+
+test("Create API Model Configuration (payload with Bearer Token)", async () => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    recordVideo: {
+      dir: "./test-results"
+    }
+  })
+
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+
+  console.log('Add Dataset')
+  await page.getByText('Models & Data').click();
+  await page.getByTestId('open-dataset-list-button').locator('span').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Click to Browse').click();
+  await page.locator("input[name='file-dropbox']").setInputFiles('./aiverify-test-samples/data/pickle_pandas_mock_regression_donation_testing.sav');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.getByTestId('datasets-back-button').click();
+
+  console.log('Add Model')
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.locator('#api').check();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.click("button[data-testid=editConfigIconBtn]");
+  await page.locator('input[name="name"]').fill("TC001");
+  await page.locator('textarea[name="description"]').fill("My test API description");
+  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  await page.getByText("Regression").click();
+  await page.locator('input[name="modelAPI.url"]').fill("https://127.0.0.1:5000/predict/tc001");
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('age');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  await page.locator('div:nth-child(2) > .newModelApiConfig_keyValRow__CZ4mA > div:nth-child(2) > .selectInput_selectInput__JQBNf > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click()
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('race');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('income');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.getByText('Additional Request Headers').click();
+  await page.getByText('Authentication Settings').click();
+  await page.locator('.newModelApiConfig_tabContent___IH8i > div > .selectInput_selectInput__JQBNf > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText('Bearer Token').click();
+  await page.getByLabel('Token').fill('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMmY4MTJiNmJlM2IzMjEyMTQzMjBjZiIsImlhdCI6MTY2MDE5Nzg3MCwiZXhwIjoxNjYyNzg5ODcwfQ.cebsoHVMzV4GGwX-QjHFc5CcTkEy7jLQQLaaHlvN2JU'); 
+  await page.click('button[type="submit"]');
+  await expect(page.getByText("New API Configuration created")).toBeVisible();
+  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
+
+  console.log('Select Template')
+  await page.locator('div:nth-child(4) > .templates_mainContent__QBxIb > div:nth-child(2) > .templates_heading__fbnTo').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'donation' }).nth(1).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('TC001').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
+  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__zQrOD > .selectInput_selectInput__JQBNf > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("total_donated_amount").click()
+  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__zQrOD > .selectInput_selectInput__JQBNf > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("number_of_donation").click()
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('SHAP ToolBox')
+  await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"] div').getByRole('button', { name: 'Open' }).click();
+  await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
+  await page.getByRole('option').filter({ hasText: 'donation' }).click()
+  await page.getByLabel('Size of the Background *').click();
+  await page.getByLabel('Size of the Background *').fill('100');
+  await page.getByLabel('Size of the Test Dataset *').click();
+  await page.getByLabel('Size of the Test Dataset *').fill('100');
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Robustness ToolBox')
+  await page.locator('[id="algocard-aiverify\\.stock\\.robustness_toolbox\\:robustness_toolbox"] div').getByRole('button', { name: 'Open' }).click();
+  await page.getByRole('button', { name: 'Annotated ground truth path' }).click();
+  await page.getByRole('listbox', { name: 'Annotated ground truth path' }).filter({ hasText: 'donation' }).click();
+  await page.getByLabel('Name of column containing image file names').click();
+  await page.getByLabel('Name of column containing image file names').fill('NA');
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Fairness Metrics ToolBox for Regression')
+  await page.locator('[id="algocard-aiverify\\.stock\\.fairness_metrics_toolbox_for_regression\\:fairness_metrics_toolbox_for_regression"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByLabel('sensitive_feature-0 *').click();
+  await page.getByLabel('sensitive_feature-0 *').fill('donation');
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Transparency Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:transparency_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-1.1.1').nth(1).click();
+  await page.getByTestId('completed-1.1.2').nth(1).click();
+  await page.getByTestId('completed-1.2.1').nth(1).click();
+  await page.getByTestId('completed-1.2.2').nth(1).click();
+  await page.getByTestId('completed-1.2.3').nth(1).click();
+  await page.getByTestId('completed-1.2.4').nth(1).click();
+  await page.getByTestId('completed-1.2.5').nth(1).click();
+  await page.getByTestId('completed-1.3.1').nth(1).click();
+  await page.locator('#aivModal').getByTestId('CloseIcon').click();
+
+  console.log('Explainability Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:explainability_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-2.1.1').nth(1).click();
+  await page.locator('#aivModal path').click();
+
+  console.log('Reproducibility Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:reproducibility_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-3.1.1').nth(1).click();
+  await page.getByTestId('completed-3.2.1').nth(1).click();
+  await page.getByTestId('completed-3.3.1').nth(1).click();
+  await page.getByTestId('completed-3.4.1').nth(1).click();
+  await page.getByTestId('completed-3.5.1').nth(1).click();
+  await page.getByTestId('completed-3.6.1').nth(1).click();
+  await page.getByTestId('completed-3.7.1').nth(1).click();
+  await page.getByTestId('completed-3.8.1').nth(1).click();
+  await page.getByTestId('completed-3.9.1').nth(1).click();
+  await page.getByTestId('completed-3.9.2').nth(1).click();
+  await page.getByTestId('completed-3.10.1').nth(1).click();
+  await page.getByTestId('completed-3.11.1').nth(1).click();
+  await page.getByTestId('completed-3.12.1').nth(1).click();
+  await page.getByTestId('completed-3.13.1').nth(1).click();
+  await page.getByTestId('completed-3.14.1').nth(1).click();
+  await page.locator('#aivModal').getByTestId('CloseIcon').click();
+
+  console.log('Safety Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:safety_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-4.1.1').nth(1).click();
+  await page.getByTestId('completed-4.2.1').nth(1).click();
+  await page.getByTestId('completed-4.3.1').nth(1).click();
+  await page.getByTestId('completed-4.4.1').nth(1).click();
+  await page.getByTestId('completed-4.5.1').nth(1).click();
+  await page.getByTestId('completed-4.5.2').nth(1).click();
+  await page.getByTestId('completed-4.5.3').nth(1).click();
+  await page.getByTestId('completed-4.5.4').nth(1).click();
+  await page.getByTestId('completed-4.6.1').nth(1).click();
+  await page.locator('#aivModal path').click();
+
+  console.log('Robustness Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:robustness_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-6.1.1').nth(1).click();
+  await page.getByTestId('completed-6.2.1').nth(1).click();
+  await page.getByTestId('completed-6.3.1').nth(1).click();
+  await page.getByTestId('completed-6.4.1').nth(1).click();
+  await page.getByTestId('completed-6.5.1').nth(1).click();
+  await page.getByTestId('completed-6.5.2').nth(1).click();
+  await page.getByTestId('completed-6.5.3').nth(1).click();
+  await page.locator('#aivModal').getByTestId('CloseIcon').click();
+
+  console.log('Fairness Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:fairness_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-7.1.1').nth(1).click();
+  await page.getByTestId('completed-7.2.1').nth(1).click();
+  await page.getByTestId('completed-7.3.1').nth(1).click();
+  await page.getByTestId('completed-7.4.1').nth(1).click();
+  await page.getByTestId('completed-7.4.2').nth(1).click();
+  await page.getByTestId('completed-7.5.1').nth(1).click();
+  await page.getByTestId('completed-7.6.1').nth(1).click();
+  await page.getByTestId('completed-7.7.1').nth(1).click();
+  await page.getByTestId('completed-7.8.1').nth(1).click();
+  await page.getByTestId('completed-7.9.1').nth(1).click();
+  await page.locator('#aivModal path').click();
+
+  console.log('Accountability Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:accountability_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-9.1.1').nth(1).click();
+  await page.getByTestId('completed-9.1.2').nth(1).click();
+  await page.getByTestId('completed-9.1.3').nth(1).click();
+  await page.getByTestId('completed-9.2.1').nth(1).click();
+  await page.getByTestId('completed-9.3.1').nth(1).click();
+  await page.getByTestId('completed-9.4.1').nth(1).click();
+  await page.getByTestId('completed-9.5.1').nth(1).click();
+  await page.getByTestId('completed-9.5.2').nth(1).click();
+  await page.locator('#aivModal').getByTestId('CloseIcon').click();
+
+  console.log('Human Agency & Oversight Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:human_agency_oversight_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-10.1.1').nth(1).click();
+  await page.getByTestId('completed-10.1.2').nth(1).click();
+  await page.getByTestId('completed-10.2.1').nth(1).click();
+  await page.getByTestId('completed-10.2.2').nth(1).click();
+  await page.getByTestId('completed-10.2.3').nth(1).click();
+  await page.getByTestId('completed-10.3.1').nth(1).click();
+  await page.getByTestId('completed-10.4.1').nth(1).click();
+  await page.getByTestId('completed-10.5.1').nth(1).click();
+  await page.locator('#aivModal').getByTestId('CloseIcon').click();
+
+  console.log('Security Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:security_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-5.1.1').nth(1).click();
+  await page.getByTestId('completed-5.2.1').nth(1).click();
+  await page.getByTestId('completed-5.3.1').nth(1).click();
+  await page.getByTestId('completed-5.3.2').nth(1).click();
+  await page.getByTestId('completed-5.4.1').nth(1).click();
+  await page.getByTestId('completed-5.4.2').nth(1).click();
+  await page.getByTestId('completed-5.4.3').nth(1).click();
+  await page.getByTestId('completed-5.4.4').nth(1).click();
+  await page.getByTestId('completed-5.5.1').nth(1).click();
+  await page.getByTestId('completed-5.5.2').nth(1).click();
+  await page.getByTestId('completed-5.5.3').nth(1).click();
+  await page.getByTestId('completed-5.6.1').nth(1).click();
+  await page.getByTestId('completed-5.6.2').nth(1).click();
+  await page.getByTestId('completed-5.7.1').nth(1).click();
+  await page.locator('#aivModal path').click();
+
+  console.log('Data Governance Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:data_governance_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-8.1.1').nth(1).click();
+  await page.getByTestId('completed-8.2.1').nth(1).click();
+  await page.getByTestId('completed-8.3.1').nth(1).click();
+  await page.getByTestId('completed-8.4.1').nth(1).click();
+  await page.locator('#aivModal').getByTestId('CloseIcon').click();
+
+  console.log('Inclusive Growth, Societal & Environmental Well-being Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:inclusive_growth_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-11.1.1').nth(1).click();
+  await page.locator('#aivModal path').click();
+
+  console.log('Organisational Considerations Process Checklist')
+  await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:organisational_considerations_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+  await page.getByTestId('completed-12.1.1').first().click();
+  await page.getByTestId('completed-12.2.1').first().click();
+  await page.getByTestId('completed-12.3.1').first().click();
+  await page.getByTestId('completed-12.4.1').first().click();
+  await page.getByTestId('completed-12.5.1').nth(1).click();
+  await page.getByTestId('completed-12.6.1').first().click();
+  await page.locator('#aivModal path').click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.getByRole('button', { name: 'View Report' }).click()
+  ]);
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Test Complete & Report Generated')
+
+});
+
+test("Create API Model Configuration (payload with Basic Auth)", async () => {
+
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    recordVideo: {
+      dir: "./test-results"
+    }
+  })
+
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+
+  console.log('Add Model')
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.locator('#api').check();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.click("button[data-testid=editConfigIconBtn]");
+  await page.locator('input[name="name"]').fill("TC002");
+  await page.locator('textarea[name="description"]').fill("My test API description");
+  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  await page.getByText("Regression").click();
+  await page.locator('input[name="modelAPI.url"]').fill("https://127.0.0.1:5000/predict/tc002");
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('age');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  await page.locator('div:nth-child(2) > .newModelApiConfig_keyValRow__CZ4mA > div:nth-child(2) > .selectInput_selectInput__JQBNf > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click()
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('race');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('income');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.getByText('Additional Request Headers').click();
+  await page.getByText('Authentication Settings').click();
+  await page.locator('.newModelApiConfig_tabContent___IH8i > div > .selectInput_selectInput__JQBNf > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText('Basic Auth').click();
+  await page.getByLabel('Username').fill('test');
+  await page.getByLabel('Password').fill('p@ssword');
+  await page.click('button[type="submit"]');
+  await expect(page.getByText("New API Configuration created")).toBeVisible();
+  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
+
+  console.log('Select Template')
+  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
+  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
+
+  console.log('Add a page')
+  await page.locator('button:nth-child(3)').first().click();
+  await page.getByRole('button', { name: 'Add Page' }).click()
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'donation' }).nth(1).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('TC001').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
+  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__zQrOD > .selectInput_selectInput__JQBNf > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("total_donated_amount").click()
+  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__zQrOD > .selectInput_selectInput__JQBNf > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("number_of_donation").click()
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Fairness Metrics Toolbox for Regression')
+  await page.getByRole('button', { name: 'Open' }).click();
+  await page.getByLabel('sensitive_feature-0 *').click();
+  await page.getByLabel('sensitive_feature-0 *').fill('donation');
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.getByRole('button', { name: 'View Report' }).click()
+  ]);
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Test Complete & Report Generated')
+});
