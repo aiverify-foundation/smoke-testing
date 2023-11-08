@@ -63,13 +63,13 @@ LOANTESTCASEPARAMS.forEach(testCase =>
     await page.getByLabel('Report TitleUse Project Name').check();
     await page.getByPlaceholder('Enter the company name').click();
     await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
-    await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
+    await page.getByText('Next').click();
 
     console.log('Select Template')
     await page.getByText('AI Verify Summary Report for Classification ModelAI Verify Summary Report for Cl').first().click();
-    await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
+    await page.getByText('Next').click();
     await page.getByRole('button', { name: 'Global Variables' }).click();
-    await page.locator('div:nth-child(4) > .header_reportNavBtn__0fDU_').click();
+    await page.getByText('Next').click();
 
     console.log('Select Dataset & Ground Truth')
     await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
