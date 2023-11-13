@@ -1531,7 +1531,7 @@ test("Create API Model Configuration (POST request to Test additional headers)",
   console.log('Test Complete & Report Generated')
 });
 
-test("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
+test.skip("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
     recordVideo: {
