@@ -1553,7 +1553,7 @@ test("Create API Model Configuration (POST request to test http method and conne
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill("https://fake.host/predict/tc009");
+  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc009");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.getByTestId('addRequestPropertyBtn').click();
