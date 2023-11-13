@@ -607,7 +607,7 @@ test.use({
 //   await page.getByRole('button', { name: 'Back to all Models >' }).click();
 // });
 
-test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
+test(`Create API Model Configuration - Payload with Bearer Token`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
     // recordVideo: {
@@ -620,13 +620,24 @@ test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
 
   console.log('Add Dataset')
   await page.getByText('Models & Data').click();
+  console.log('1')
   await page.getByTestId('open-dataset-list-button').locator('span').click();
+  console.log('2')
   await page.getByTestId('add-new-datasets-button').click();
+  console.log('3')
   await page.getByText('Click to Browse').click();
+  console.log('4')
   await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
+  console.log('5')
   await page.getByTestId('upload-datasets-button').click();
+  console.log('6')
   await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  console.log('7')
   await page.getByTestId('datasets-back-button').click();
+
+  await page.getByTestId('open-model-list-button').locator('span').click();
+//   await page.getByTestId('add-new-models-button').click();
+//   await page.getByText('Upload AI Model').click();
 
   console.log('Add Model')
   await page.getByTestId('open-model-list-button').locator('span').click();
