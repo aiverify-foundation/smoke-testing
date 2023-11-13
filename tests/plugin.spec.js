@@ -630,46 +630,87 @@ test("Create API Model Configuration (Payload with Bearer Token)", async () => {
 
   console.log('Add Model')
   await page.getByTestId('open-model-list-button').locator('span').click();
+  console.log('1')
   await page.getByTestId('add-new-models-button').click();
+  console.log('2')
   await page.locator('#api').check();
+  console.log('3')
   await page.getByTestId('newmodel-next-button').click();
+  console.log('4')
   await page.click("button[data-testid=editConfigIconBtn]");
+  console.log('5')
   await page.locator('input[name="name"]').fill("TC001");
+  console.log('6')
   await page.locator('textarea[name="description"]').fill("My test API description");
+  console.log('7')
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  console.log('8')
   await page.getByText("Regression").click();
+  console.log('9')
   await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc001");
+  console.log('10')
   await page.locator('input[name="reqBodyParamName"]').click();
+  console.log('11')
   await page.locator('input[name="reqBodyParamName"]').fill('age');
+  console.log('12')
   await page.getByTestId('addRequestPropertyBtn').click();
+  console.log('13')
   await page.locator('input[name="reqBodyParamName"]').click();
+  console.log('14')
   await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  console.log('15')
   await page.getByTestId('addRequestPropertyBtn').click();
+  console.log('16')
   await page.locator('input[name="reqBodyParamName"]').click();
+  console.log('17')
   await page.locator('input[name="reqBodyParamName"]').fill('race');
+  console.log('18')
   await page.getByTestId('addRequestPropertyBtn').click();
+  console.log('19')
   await page.locator('input[name="reqBodyParamName"]').click();
+  console.log('20')
   await page.locator('input[name="reqBodyParamName"]').fill('income');
+  console.log('21')
   await page.getByTestId('addRequestPropertyBtn').click();
+  console.log('22')
   await page.locator('input[name="reqBodyParamName"]').click();
+  console.log('23')
   await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  console.log('24')
   await page.getByTestId('addRequestPropertyBtn').click();
+  console.log('25')
   await page.locator('input[name="reqBodyParamName"]').click();
+  console.log('26')
   await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  console.log('27')
   await page.getByTestId('addRequestPropertyBtn').click();
+  console.log('28')
   await page.locator('input[name="reqBodyParamName"]').click();
+  console.log('29')
   await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  console.log('30')
   await page.getByTestId('addRequestPropertyBtn').click();
+  console.log('31')
   await page.locator('input[name="reqBodyParamName"]').click();
+  console.log('32')
   await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  console.log('33')
   await page.getByTestId('addRequestPropertyBtn').click();
+  console.log('34')
   await page.getByText('Authentication Settings').click();
+  console.log('35')
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  console.log('36')
   await page.getByText('Bearer Token').click();
+  console.log('37')
   await page.getByLabel('Token').fill('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMmY4MTJiNmJlM2IzMjEyMTQzMjBjZiIsImlhdCI6MTY2MDE5Nzg3MCwiZXhwIjoxNjYyNzg5ODcwfQ.cebsoHVMzV4GGwX-QjHFc5CcTkEy7jLQQLaaHlvN2JU');
+  console.log('38')
   await page.click('button[type="submit"]');
+  console.log('39')
   await expect(page.getByText("New API Configuration created")).toBeVisible();
+  console.log('40')
   await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  console.log('41')
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
   console.log('Create A Project')
