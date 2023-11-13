@@ -633,7 +633,8 @@ test("Create API Model Configuration (Payload with Bearer Token)", async () => {
   console.log('1')
   await page.getByTestId('add-new-models-button').click();
   console.log('2')
-  await page.locator('#api').check();
+  // await page.locator('#api').check();
+  await page.getByText('Connect to AI Model API').click();
   console.log('3')
   await page.getByTestId('newmodel-next-button').click();
   console.log('4')
