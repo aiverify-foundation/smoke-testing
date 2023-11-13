@@ -568,44 +568,44 @@ test(`SHAP Toolbox Plugin`, async () => {
 
 })
 
-test.skip('Pipeline', async () => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
-  })
+// test.skip('Pipeline', async () => {
+//   const browser = await chromium.launch();
+//   const context = await browser.newContext({
+//     recordVideo: {
+//       dir: "./test-results"
+//     }
+//   })
 
-  const BASEDIR = "./fixtures/prepare-image-files/data/"
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
-  await page.getByTestId('open-dataset-list-button').locator('span').click();
-  await page.getByTestId('add-new-datasets-button').click();
-  await page.getByText('Drag & Drop or Click to Browse').click();
-  await page.getByTestId('upload-folder-button').click();
-  await page.locator("input[name='folder-input']").setInputFiles(BASEDIR + 'raw_fashion_image_10');
-  await page.getByTestId('upload-datasets-button').click();
-  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
-  await page.getByText('raw_fashion_image_10').click();
-  await page.getByTestId('add-new-datasets-button').click();
-  await page.getByText('Drag & Drop or Click to Browse').click();
-  await page.getByTestId('upload-folder-button').click();
-  await page.getByTestId('upload-file-dropbox').click();
-  await page.locator("input[name='file-dropbox']").setInputFiles(BASEDIR + 'pickle_pandas_fashion_mnist_annotated_labels_10.sav');
-  await page.getByTestId('upload-datasets-button').click();
-  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
-  await page.locator('.home_header__vrBsY').click();
-  await page.getByText('Models & Data').click();
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByTestId('add-new-models-button').click();
-  await page.getByText('Upload Pipeline').click();
-  await page.getByTestId('newmodel-next-button').click();
-  await page.getByTestId('upload-file-dropbox').click();
-  await page.locator('div:nth-child(2) > div > div:nth-child(2) > div').first().setInputFiles(['fashionCustomClass.py', 'fashion_mnist_lr_pipeline.sav', 'customClass.cpython-310.pyc']);
-  await page.getByTestId('upload-models-button').click();
-  await page.getByRole('button', { name: 'Back to all Models >' }).click();
-});
+//   const BASEDIR = "./fixtures/prepare-image-files/data/"
+//   const page = await context.newPage();
+//   await page.goto('http://127.0.0.1:3000/home');
+//   await page.getByText('Models & Data').click();
+//   await page.getByTestId('open-dataset-list-button').locator('span').click();
+//   await page.getByTestId('add-new-datasets-button').click();
+//   await page.getByText('Drag & Drop or Click to Browse').click();
+//   await page.getByTestId('upload-folder-button').click();
+//   await page.locator("input[name='folder-input']").setInputFiles(BASEDIR + 'raw_fashion_image_10');
+//   await page.getByTestId('upload-datasets-button').click();
+//   await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+//   await page.getByText('raw_fashion_image_10').click();
+//   await page.getByTestId('add-new-datasets-button').click();
+//   await page.getByText('Drag & Drop or Click to Browse').click();
+//   await page.getByTestId('upload-folder-button').click();
+//   await page.getByTestId('upload-file-dropbox').click();
+//   await page.locator("input[name='file-dropbox']").setInputFiles(BASEDIR + 'pickle_pandas_fashion_mnist_annotated_labels_10.sav');
+//   await page.getByTestId('upload-datasets-button').click();
+//   await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+//   await page.locator('.home_header__vrBsY').click();
+//   await page.getByText('Models & Data').click();
+//   await page.getByTestId('open-model-list-button').locator('span').click();
+//   await page.getByTestId('add-new-models-button').click();
+//   await page.getByText('Upload Pipeline').click();
+//   await page.getByTestId('newmodel-next-button').click();
+//   await page.getByTestId('upload-file-dropbox').click();
+//   await page.locator('div:nth-child(2) > div > div:nth-child(2) > div').first().setInputFiles(['fashionCustomClass.py', 'fashion_mnist_lr_pipeline.sav', 'customClass.cpython-310.pyc']);
+//   await page.getByTestId('upload-models-button').click();
+//   await page.getByRole('button', { name: 'Back to all Models >' }).click();
+// });
 
 test("Create API Model Configuration (Payload with Bearer Token)", async () => {
   const browser = await chromium.launch();
