@@ -664,11 +664,11 @@ test(`Create API Model Configuration - Payload with Bearer Token`, async () => {
   await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
   await page.getByTestId('addRequestPropertyBtn').click();
   await page.getByText('Authentication Settings').click();
-  console.log('Passed here')
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText('Bearer Token').click();
   await page.getByLabel('Token').fill('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMmY4MTJiNmJlM2IzMjEyMTQzMjBjZiIsImlhdCI6MTY2MDE5Nzg3MCwiZXhwIjoxNjYyNzg5ODcwfQ.cebsoHVMzV4GGwX-QjHFc5CcTkEy7jLQQLaaHlvN2JU');
   await page.click('button[type="submit"]');
+  console.log('Submit Button Pressed')
   await expect(page.getByText("New API Configuration created")).toBeVisible();
   await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
   await page.getByRole('img', { name: 'AI Verify' }).click();
