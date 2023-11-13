@@ -3073,7 +3073,7 @@ test("Mock Response HTTP 504", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc19");
+  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc019");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("multipart/form-data").click()
   await page.locator('input[name="reqBodyParamName"]').click();
