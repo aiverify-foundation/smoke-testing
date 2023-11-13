@@ -610,9 +610,9 @@ test.skip('Pipeline', async () => {
 test("Create API Model Configuration (Payload with Bearer Token)", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
