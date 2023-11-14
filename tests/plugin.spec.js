@@ -761,7 +761,7 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
   await page.locator('#api').check();
   await page.getByTestId('newmodel-next-button').click();
   await page.click("button[data-testid=editConfigIconBtn]");
-  await page.locator('input[name="name"]').fill("TC002");
+  await page.locator('input[name="name"]').fill("TC100");
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
