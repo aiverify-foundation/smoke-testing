@@ -1,8 +1,7 @@
 import { test, expect, chromium } from '@playwright/test';
 
 // let url = process.env.ENVIRONMENT_URL
-let url = "https://192.168.253.148:5000"
-
+let url = "https://127.0.0.1:5000"
 test.use({
   viewport: {
     width: 1920,
