@@ -745,7 +745,6 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
   
   console.log('Add Dataset')
   await page.getByText('Models & Data').click();
