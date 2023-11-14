@@ -743,6 +743,16 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
     }
   })
 
+  console.log('Add Dataset')
+  await page.getByText('Models & Data').click();
+  await page.getByTestId('open-dataset-list-button').locator('span').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Click to Browse').click();
+  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.getByTestId('datasets-back-button').click();
+
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
   await page.getByText('Models & Data').click();
