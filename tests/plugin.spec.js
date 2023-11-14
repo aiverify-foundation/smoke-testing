@@ -607,7 +607,7 @@ test.skip('Pipeline', async () => {
   await page.getByRole('button', { name: 'Back to all Models >' }).click();
 });
 
-test.skip(`Create API Model Configuration - Payload with Bearer Token`, async () => {
+test.skip(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
     // recordVideo: {
@@ -761,7 +761,7 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
   await page.locator('#api').check();
   await page.getByTestId('newmodel-next-button').click();
   await page.click("button[data-testid=editConfigIconBtn]");
-  await page.locator('input[name="name"]').fill("TC100");
+  await page.locator('input[name="name"]').fill("TC002");
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
@@ -796,6 +796,7 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
   await page.getByLabel('Username').fill('test');
   await page.getByLabel('Password').fill('p@ssword');
   await page.click('button[type="submit"]');
+  console.log('Submit Button Pressed')
   await expect(page.getByText("New API Configuration created")).toBeVisible();
   await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
   await page.getByRole('img', { name: 'AI Verify' }).click();
