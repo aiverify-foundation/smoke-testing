@@ -607,12 +607,12 @@ test.skip('Pipeline', async () => {
   await page.getByRole('button', { name: 'Back to all Models >' }).click();
 });
 
-test.skip(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
+test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
+    recordVideo: {
+      dir: "./test-results"
+    }
   })
 
   const page = await context.newPage();
@@ -662,7 +662,6 @@ test.skip(`Create API Model Configuration (Payload with Bearer Token)`, async ()
   await page.getByTestId('addRequestPropertyBtn').click();
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
-  await page.getByTestId('addRequestPropertyBtn').click();
   await page.getByTestId('addRequestPropertyBtn').click();
   await page.getByText('Authentication Settings').click();
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
@@ -744,16 +743,7 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
-  
-  console.log('Add Dataset')
   await page.getByText('Models & Data').click();
-  await page.getByTestId('open-dataset-list-button').locator('span').click();
-  await page.getByTestId('add-new-datasets-button').click();
-  await page.getByText('Click to Browse').click();
-  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
-  await page.getByTestId('upload-datasets-button').click();
-  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
-  await page.getByTestId('datasets-back-button').click();
 
   console.log('Add Model')
   await page.getByTestId('open-model-list-button').locator('span').click();
@@ -797,7 +787,6 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
   await page.getByLabel('Password').fill('p@ssword');
   await page.click('button[type="submit"]');
   await expect(page.getByText("New API Configuration created")).toBeVisible();
-  console.log("API Config Saved")
   await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
@@ -1547,7 +1536,7 @@ test("Create API Model Configuration (POST request to Test additional headers)",
   console.log('Test Complete & Report Generated')
 });
 
-test.skip("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
+test("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
     recordVideo: {
@@ -2606,7 +2595,7 @@ test("Wrong Content Type", async () => {
 
 });
 
-test.skip("Missing Request Parameters", async () => {
+test("Missing Request Parameters", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
     recordVideo: {
