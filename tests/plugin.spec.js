@@ -796,8 +796,8 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
   await page.getByLabel('Username').fill('test');
   await page.getByLabel('Password').fill('p@ssword');
   await page.click('button[type="submit"]');
-  console.log('Submit Button Pressed')
   await expect(page.getByText("New API Configuration created")).toBeVisible();
+  console.log("API Config Saved")
   await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
