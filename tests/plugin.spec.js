@@ -743,6 +743,10 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
     }
   })
 
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+  
   console.log('Add Dataset')
   await page.getByText('Models & Data').click();
   await page.getByTestId('open-dataset-list-button').locator('span').click();
@@ -752,10 +756,6 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
   await page.getByTestId('upload-datasets-button').click();
   await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
   await page.getByTestId('datasets-back-button').click();
-
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
 
   console.log('Add Model')
   await page.getByTestId('open-model-list-button').locator('span').click();
