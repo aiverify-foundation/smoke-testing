@@ -806,11 +806,16 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
 
   console.log('Select Template')
   await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+
   await page.getByText('Next').click();
 
   console.log('Canvas')
   await page.getByRole('button', { name: 'Fairness for Regression' }).click();
   await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
+
+  console.log('Add a page')
+  await page.locator('button:nth-child(3)').first().click();
+  await page.getByRole('button', { name: 'Add Page' }).click()
   await page.getByText('Next').click();
 
   console.log('Select Dataset & Ground Truth')
