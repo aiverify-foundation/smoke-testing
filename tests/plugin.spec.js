@@ -1,7 +1,7 @@
 import { test, expect, chromium } from '@playwright/test';
 
 // let url = process.env.ENVIRONMENT_URL
-let url = "https://127.0.0.1:5000"
+let url = "https://192.168.17.128:5000"
 
 test.use({
   viewport: {
@@ -10,12 +10,132 @@ test.use({
   }
 });
 
+test.skip("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
+  })
+  
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+  
+  console.log('Add Dataset')
+  await page.getByTestId('open-dataset-list-button').locator('span').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Click to Browse').click();
+  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.getByTestId('datasets-back-button').click();
+
+  console.log('Add Model')
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.locator('#api').check();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.click("button[data-testid=editConfigIconBtn]");
+  await page.locator('input[name="name"]').fill("TC009");
+  await page.locator('textarea[name="description"]').fill("My test API description");
+  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  await page.getByText("Regression").click();
+  await page.locator('input[name="modelAPI.url"]').fill("https://fake.host/predict/tc009");
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('age');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('race');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('income');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.click('button[type="submit"]');
+  await expect(page.getByText("New API Configuration created")).toBeVisible();
+  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.getByText('Next').click();
+
+  console.log('Select Template')
+  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
+  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'donation' }).nth(1).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('TC009').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
+  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
+  await page.getByText("total_donated_amount").click()
+  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("number_of_donation").click()
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Fairness Metrics Toolbox for Regression')
+  await page.getByRole('button', { name: 'Open' }).click();
+  await page.getByLabel('sensitive_feature-0 *').click();
+  await page.getByLabel('sensitive_feature-0 *').fill('donation');
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
+    expect(page.getByText("Error encountered while running test")).toBeVisible()
+  ]);
+
+  console.log('Test Complete & Report Generated')
+});
+
 test(`FMTC Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -139,9 +259,9 @@ test(`FMTC Plugin`, async () => {
 test(`ALE Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -215,9 +335,9 @@ test(`ALE Plugin`, async () => {
 test(`FMTR Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -308,9 +428,9 @@ test(`FMTR Plugin`, async () => {
 test(`PDP Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -393,9 +513,9 @@ test(`PDP Plugin`, async () => {
 test(`Robustness Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -486,9 +606,9 @@ test(`Robustness Plugin`, async () => {
 test(`SHAP Toolbox Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -569,58 +689,19 @@ test(`SHAP Toolbox Plugin`, async () => {
 
 })
 
-test.skip('Pipeline', async () => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
-  })
-
-  const BASEDIR = "./fixtures/prepare-image-files/data/"
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
-  await page.getByTestId('open-dataset-list-button').locator('span').click();
-  await page.getByTestId('add-new-datasets-button').click();
-  await page.getByText('Drag & Drop or Click to Browse').click();
-  await page.getByTestId('upload-folder-button').click();
-  await page.locator("input[name='folder-input']").setInputFiles(BASEDIR + 'raw_fashion_image_10');
-  await page.getByTestId('upload-datasets-button').click();
-  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
-  await page.getByText('raw_fashion_image_10').click();
-  await page.getByTestId('add-new-datasets-button').click();
-  await page.getByText('Drag & Drop or Click to Browse').click();
-  await page.getByTestId('upload-folder-button').click();
-  await page.getByTestId('upload-file-dropbox').click();
-  await page.locator("input[name='file-dropbox']").setInputFiles(BASEDIR + 'pickle_pandas_fashion_mnist_annotated_labels_10.sav');
-  await page.getByTestId('upload-datasets-button').click();
-  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
-  await page.locator('.home_header__vrBsY').click();
-  await page.getByText('Models & Data').click();
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByTestId('add-new-models-button').click();
-  await page.getByText('Upload Pipeline').click();
-  await page.getByTestId('newmodel-next-button').click();
-  await page.getByTestId('upload-file-dropbox').click();
-  await page.locator('div:nth-child(2) > div > div:nth-child(2) > div').first().setInputFiles(['fashionCustomClass.py', 'fashion_mnist_lr_pipeline.sav', 'customClass.cpython-310.pyc']);
-  await page.getByTestId('upload-models-button').click();
-  await page.getByRole('button', { name: 'Back to all Models >' }).click();
-});
-
 test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
-
+  
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
 
   console.log('Add Dataset')
-  await page.getByText('Models & Data').click();
   await page.getByTestId('open-dataset-list-button').locator('span').click();
   await page.getByTestId('add-new-datasets-button').click();
   await page.getByText('Click to Browse').click();
@@ -737,9 +818,9 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -860,9 +941,9 @@ test("Create API Model Configuration (POST request with x-www-form-urlencoded re
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -973,9 +1054,9 @@ test("Create API Model Configuration (POST request with form-data request body)"
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -1088,9 +1169,9 @@ test("Create API Model Configuration (GET request with query parameters)", async
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -1195,9 +1276,9 @@ test("Create API Model Configuration (GET request with path parameters)", async 
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -1304,9 +1385,9 @@ test("Create API Model Configuration (POST request to read JSON response)", asyn
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -1422,9 +1503,9 @@ test("Create API Model Configuration (POST request to Test additional headers)",
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -1537,124 +1618,13 @@ test("Create API Model Configuration (POST request to Test additional headers)",
   console.log('Test Complete & Report Generated')
 });
 
-test("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
-  })
-
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
-
-  console.log('Add Model')
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByTestId('add-new-models-button').click();
-  await page.locator('#api').check();
-  await page.getByTestId('newmodel-next-button').click();
-  await page.click("button[data-testid=editConfigIconBtn]");
-  await page.locator('input[name="name"]').fill("TC009");
-  await page.locator('textarea[name="description"]').fill("My test API description");
-  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
-  await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill("https://fake.host/predict/tc009");
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('age');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('gender');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('race');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('income');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.click('button[type="submit"]');
-  await expect(page.getByText("New API Configuration created")).toBeVisible();
-  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
-  await page.getByRole('img', { name: 'AI Verify' }).click();
-
-  console.log('Create A Project')
-  await page.getByTestId('new-project-button').getByText('Create New Project').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
-  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
-  await page.getByLabel('Report TitleUse Project Name').check();
-  await page.getByPlaceholder('Enter the company name').click();
-  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
-  await page.getByText('Next').click();
-
-  console.log('Select Template')
-  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
-  await page.getByText('Next').click();
-
-  console.log('Canvas')
-  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
-  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
-  await page.getByText('Next').click();
-
-  console.log('Select Dataset & Ground Truth')
-  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: 'Choose Dataset' }).click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: '​' }).click();
-  await page.getByRole('option', { name: 'donation' }).nth(1).click();
-
-  console.log('Select Model')
-  await page.getByRole('button', { name: 'Choose Model' }).click();
-  await page.getByText('TC009').click();
-  await page.getByRole('button', { name: 'Use Model' }).click();
-  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
-  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
-  await page.getByText("total_donated_amount").click()
-  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("number_of_donation").click()
-  await page.getByRole('button', { name: 'OK' }).click();
-
-  console.log('Fairness Metrics Toolbox for Regression')
-  await page.getByRole('button', { name: 'Open' }).click();
-  await page.getByLabel('sensitive_feature-0 *').click();
-  await page.getByLabel('sensitive_feature-0 *').fill('donation');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await page.getByText('Next').click();
-  await page.getByRole('button', { name: 'Proceed' }).click();
-
-  console.log('Running Tests & Generating Report')
-  const [page1] = await Promise.all([
-    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
-    expect(page.getByText("Error encountered while running test")).toBeVisible()
-  ]);
-
-  console.log('Test Complete & Report Generated')
-});
-
 test("Create API Model Configuration (POST request with application/json request body with array support and array response of integers)", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -1769,9 +1739,9 @@ test("Create API Model Configuration (POST request with application/json request
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -1888,9 +1858,9 @@ test("Create API Model Configuration (POST request with application/json request
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2008,9 +1978,9 @@ test("Create API Model Configuration (POST request with application/json request
 test("Wrong Bearer Token", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2124,9 +2094,9 @@ test("Wrong Bearer Token", async () => {
 test("Wrong Basic Auth", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2245,9 +2215,9 @@ test("Wrong Basic Auth", async () => {
 test("Wrong Auth Type", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2367,9 +2337,9 @@ test("Missing Headers", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2480,9 +2450,9 @@ test("Wrong Content Type", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2599,9 +2569,9 @@ test("Wrong Content Type", async () => {
 test("Missing Request Parameters", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2702,9 +2672,9 @@ test("Mock Response HTTP 429", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2821,9 +2791,9 @@ test("Mock Response HTTP 500", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -2941,9 +2911,9 @@ test("Mock Response HTTP 502", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -3060,9 +3030,9 @@ test("Mock Response HTTP 503", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
@@ -3179,9 +3149,9 @@ test("Mock Response HTTP 504", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    recordVideo: {
-      dir: "./test-results"
-    }
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
   })
 
   const page = await context.newPage();
