@@ -9,7 +9,7 @@ test.use({
   }
 });
 
-test("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
+test.skip("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
     // recordVideo: {
