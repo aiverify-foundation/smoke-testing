@@ -35,7 +35,7 @@ test("Mock Response HTTP 500", async () => {
   console.log('Add Model')
   await page.getByTestId('open-model-list-button').locator('span').click();
   await page.getByTestId('add-new-models-button').click();
-  await page.locator('#api').click()
+  await page.locator('#api').check()
   await page.getByTestId('newmodel-next-button').click();
   await page.click("button[data-testid=editConfigIconBtn]");
   await page.locator('input[name="name"]').fill("Mock Response HTTP 500");
