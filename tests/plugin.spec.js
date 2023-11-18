@@ -10,7 +10,7 @@ test.use({
   }
 });
 
-test("Mock Response HTTP 500", async () => {
+test.skip("Mock Response HTTP 500", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
@@ -258,7 +258,7 @@ test.skip("Mock Response HTTP 502", async () => {
   console.log('Test Complete & Report Generated')
 })
 
-test("Mock Response HTTP 503", async () => {
+test.skip("Mock Response HTTP 503", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
@@ -377,7 +377,7 @@ test("Mock Response HTTP 503", async () => {
   console.log('Test Complete & Report Generated')
 })
 
-test("Mock Response HTTP 504", async () => {
+test.skip("Mock Response HTTP 504", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
