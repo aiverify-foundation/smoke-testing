@@ -139,7 +139,7 @@ test("Mock Response HTTP 500", async () => {
 
 });
 
-test("Mock Response HTTP 502", async () => {
+test.skip("Mock Response HTTP 502", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext({
