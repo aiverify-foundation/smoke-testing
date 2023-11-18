@@ -23,6 +23,15 @@ test("Mock Response HTTP 500", async () => {
   await page.goto('http://127.0.0.1:3000/home');
   await page.getByText('Models & Data').click();
 
+  console.log('Add Dataset')
+  await page.getByTestId('open-dataset-list-button').locator('span').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Click to Browse').click();
+  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.getByTestId('datasets-back-button').click();
+
   console.log('Add Model')
   await page.getByTestId('open-model-list-button').locator('span').click();
   await page.getByTestId('add-new-models-button').click();
@@ -905,6 +914,9 @@ test(`FMTR Plugin`, async () => {
 test(`PDP Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
     // recordVideo: {
     //   dir: "./test-results"
     // }
