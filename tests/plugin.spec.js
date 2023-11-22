@@ -9,612 +9,6 @@ test.use({
   }
 });
 
-test.skip("Mock Response HTTP 500", async () => {
-
-  const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
-
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
-
-  console.log('Add Dataset')
-  await page.getByTestId('open-dataset-list-button').locator('span').click();
-  await page.getByTestId('add-new-datasets-button').click();
-  await page.getByText('Click to Browse').click();
-  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
-  await page.getByTestId('upload-datasets-button').click();
-  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
-  await page.getByTestId('datasets-back-button').click();
-
-  console.log('Add Model')
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByTestId('add-new-models-button').click();
-  await page.locator('#api').check()
-  await page.getByTestId('newmodel-next-button').click();
-  await page.click("button[data-testid=editConfigIconBtn]");
-  await page.locator('input[name="name"]').fill("Mock Response HTTP 500");
-  await page.locator('textarea[name="description"]').fill("My test API description");
-  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
-  await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc016");
-  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("multipart/form-data").click()
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('age');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('gender');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('race');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('income');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.getByText('Authentication Settings').click();
-  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText('Basic Auth').click();
-  await page.getByLabel('Username').fill('test');
-  await page.getByLabel('Password').fill('p@ssword');
-  await page.click('button[type="submit"]');
-  await expect(page.getByText("New API Configuration created")).toBeVisible();
-  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
-  await page.getByRole('img', { name: 'AI Verify' }).click();
-
-  console.log('Create A Project')
-  await page.getByTestId('new-project-button').getByText('Create New Project').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
-  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
-  await page.getByLabel('Report TitleUse Project Name').check();
-  await page.getByPlaceholder('Enter the company name').click();
-  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
-  await page.getByText('Next').click();
-
-  console.log('Select Template')
-  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
-  await page.getByText('Next').click();
-
-  console.log('Canvas')
-  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
-  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
-  await page.getByText('Next').click();
-
-  console.log('Select Dataset & Ground Truth')
-  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: 'Choose Dataset' }).click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: '​' }).click();
-  await page.getByRole('option', { name: 'donation' }).nth(1).click();
-
-  console.log('Select Model')
-  await page.getByRole('button', { name: 'Choose Model' }).click();
-  await page.getByText('Mock Response HTTP 500').click();
-  await page.getByRole('button', { name: 'Use Model' }).click();
-  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
-  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
-  await page.getByText("total_donated_amount").click()
-  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("number_of_donation").click()
-  await page.getByRole('button', { name: 'OK' }).click();
-
-  console.log('Fairness Metrics Toolbox for Regression')
-  await page.getByRole('button', { name: 'Open' }).click();
-  await page.getByLabel('sensitive_feature-0 *').click();
-  await page.getByLabel('sensitive_feature-0 *').fill('donation');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await page.getByText('Next').click();
-  await page.getByRole('button', { name: 'Proceed' }).click();
-
-  console.log('Running Tests & Generating Report')
-  const [page1] = await Promise.all([
-    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
-    expect(page.getByText("Error encountered while running test")).toBeVisible()
-  ]);
-
-  console.log('Test Complete & Report Generated')
-
-});
-
-test.skip("Mock Response HTTP 502", async () => {
-
-  const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
-
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
-
-  console.log('Add Model')
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByTestId('add-new-models-button').click();
-  await page.locator('#api').check();
-  await page.getByTestId('newmodel-next-button').click();
-  await page.click("button[data-testid=editConfigIconBtn]");
-  await page.locator('input[name="name"]').fill("Mock Response HTTP 502");
-  await page.locator('textarea[name="description"]').fill("My test API description");
-  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
-  await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc017");
-  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("multipart/form-data").click()
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('age');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('gender');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('race');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('income');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.getByText('Authentication Settings').click();
-  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText('Basic Auth').click();
-  await page.getByLabel('Username').fill('test');
-  await page.getByLabel('Password').fill('p@ssword');
-  await page.click('button[type="submit"]');
-  await expect(page.getByText("New API Configuration created")).toBeVisible();
-  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
-  await page.getByRole('img', { name: 'AI Verify' }).click();
-
-  console.log('Create A Project')
-  await page.getByTestId('new-project-button').getByText('Create New Project').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
-  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
-  await page.getByLabel('Report TitleUse Project Name').check();
-  await page.getByPlaceholder('Enter the company name').click();
-  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
-  await page.getByText('Next').click();
-
-  console.log('Select Template')
-  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
-  await page.getByText('Next').click();
-
-  console.log('Canvas')
-  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
-  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
-  await page.getByText('Next').click();
-
-  console.log('Select Dataset & Ground Truth')
-  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: 'Choose Dataset' }).click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: '​' }).click();
-  await page.getByRole('option', { name: 'donation' }).nth(1).click();
-
-  console.log('Select Model')
-  await page.getByRole('button', { name: 'Choose Model' }).click();
-  await page.getByText('Mock Response HTTP 502').click();
-  await page.getByRole('button', { name: 'Use Model' }).click();
-  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
-  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
-  await page.getByText("total_donated_amount").click()
-  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("number_of_donation").click()
-  await page.getByRole('button', { name: 'OK' }).click();
-
-  console.log('Fairness Metrics Toolbox for Regression')
-  await page.getByRole('button', { name: 'Open' }).click();
-  await page.getByLabel('sensitive_feature-0 *').click();
-  await page.getByLabel('sensitive_feature-0 *').fill('donation');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await page.getByText('Next').click();
-  await page.getByRole('button', { name: 'Proceed' }).click();
-
-  console.log('Running Tests & Generating Report')
-  const [page1] = await Promise.all([
-    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
-    expect(page.getByText("Error encountered while running test")).toBeVisible()
-  ]);
-
-  console.log('Test Complete & Report Generated')
-})
-
-test.skip("Mock Response HTTP 503", async () => {
-
-  const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
-
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
-
-  console.log('Add Model')
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByTestId('add-new-models-button').click();
-  await page.locator('#api').check();
-  await page.getByTestId('newmodel-next-button').click();
-  await page.click("button[data-testid=editConfigIconBtn]");
-  await page.locator('input[name="name"]').fill("Mock Response HTTP 503");
-  await page.locator('textarea[name="description"]').fill("My test API description");
-  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
-  await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc018");
-  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("multipart/form-data").click()
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('age');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('gender');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('race');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('income');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.getByText('Authentication Settings').click();
-  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText('Basic Auth').click();
-  await page.getByLabel('Username').fill('test');
-  await page.getByLabel('Password').fill('p@ssword');
-  await page.click('button[type="submit"]');
-  await expect(page.getByText("New API Configuration created")).toBeVisible();
-  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
-  await page.getByRole('img', { name: 'AI Verify' }).click();
-
-  console.log('Create A Project')
-  await page.getByTestId('new-project-button').getByText('Create New Project').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
-  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
-  await page.getByLabel('Report TitleUse Project Name').check();
-  await page.getByPlaceholder('Enter the company name').click();
-  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
-  await page.getByText('Next').click();
-
-  console.log('Select Template')
-  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
-  await page.getByText('Next').click();
-
-  console.log('Canvas')
-  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
-  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
-  await page.getByText('Next').click();
-
-  console.log('Select Dataset & Ground Truth')
-  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: 'Choose Dataset' }).click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: '​' }).click();
-  await page.getByRole('option', { name: 'donation' }).nth(1).click();
-
-  console.log('Select Model')
-  await page.getByRole('button', { name: 'Choose Model' }).click();
-  await page.getByText('Mock Response HTTP 503').click();
-  await page.getByRole('button', { name: 'Use Model' }).click();
-  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
-  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
-  await page.getByText("total_donated_amount").click()
-  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("number_of_donation").click()
-  await page.getByRole('button', { name: 'OK' }).click();
-
-  console.log('Fairness Metrics Toolbox for Regression')
-  await page.getByRole('button', { name: 'Open' }).click();
-  await page.getByLabel('sensitive_feature-0 *').click();
-  await page.getByLabel('sensitive_feature-0 *').fill('donation');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await page.getByText('Next').click();
-  await page.getByRole('button', { name: 'Proceed' }).click();
-
-  console.log('Running Tests & Generating Report')
-  const [page1] = await Promise.all([
-    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
-    expect(page.getByText("Error encountered while running test")).toBeVisible()
-  ]);
-
-  console.log('Test Complete & Report Generated')
-})
-
-test.skip("Mock Response HTTP 504", async () => {
-
-  const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
-
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
-
-  console.log('Add Model')
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByTestId('add-new-models-button').click();
-  await page.locator('#api').check();
-  await page.getByTestId('newmodel-next-button').click();
-  await page.click("button[data-testid=editConfigIconBtn]");
-  await page.locator('input[name="name"]').fill("Mock Response HTTP 504");
-  await page.locator('textarea[name="description"]').fill("My test API description");
-  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
-  await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc019");
-  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("multipart/form-data").click()
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('age');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('gender');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('race');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('income');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.getByText('Authentication Settings').click();
-  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText('Basic Auth').click();
-  await page.getByLabel('Username').fill('test');
-  await page.getByLabel('Password').fill('p@ssword');
-  await page.click('button[type="submit"]');
-  await expect(page.getByText("New API Configuration created")).toBeVisible();
-  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
-  await page.getByRole('img', { name: 'AI Verify' }).click();
-
-  console.log('Create A Project')
-  await page.getByTestId('new-project-button').getByText('Create New Project').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
-  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
-  await page.getByLabel('Report TitleUse Project Name').check();
-  await page.getByPlaceholder('Enter the company name').click();
-  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
-  await page.getByText('Next').click();
-
-  console.log('Select Template')
-  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
-  await page.getByText('Next').click();
-
-  console.log('Canvas')
-  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
-  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
-  await page.getByText('Next').click();
-
-  console.log('Select Dataset & Ground Truth')
-  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: 'Choose Dataset' }).click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: '​' }).click();
-  await page.getByRole('option', { name: 'donation' }).nth(1).click();
-
-  console.log('Select Model')
-  await page.getByRole('button', { name: 'Choose Model' }).click();
-  await page.getByText('Mock Response HTTP 504').click();
-  await page.getByRole('button', { name: 'Use Model' }).click();
-  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
-  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
-  await page.getByText("total_donated_amount").click()
-  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("number_of_donation").click()
-  await page.getByRole('button', { name: 'OK' }).click();
-
-  console.log('Fairness Metrics Toolbox for Regression')
-  await page.getByRole('button', { name: 'Open' }).click();
-  await page.getByLabel('sensitive_feature-0 *').click();
-  await page.getByLabel('sensitive_feature-0 *').fill('donation');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await page.getByText('Next').click();
-  await page.getByRole('button', { name: 'Proceed' }).click();
-
-  console.log('Running Tests & Generating Report')
-  const [page1] = await Promise.all([
-    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
-    expect(page.getByText("Error encountered while running test")).toBeVisible()
-  ]);
-
-  console.log('Test Complete & Report Generated')
-})
-
-test.skip("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
-  
-  const page = await context.newPage();
-  await page.goto('http://127.0.0.1:3000/home');
-  await page.getByText('Models & Data').click();
-  
-  console.log('Add Dataset')
-  await page.getByTestId('open-dataset-list-button').locator('span').click();
-  await page.getByTestId('add-new-datasets-button').click();
-  await page.getByText('Click to Browse').click();
-  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
-  await page.getByTestId('upload-datasets-button').click();
-  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
-  await page.getByTestId('datasets-back-button').click();
-
-  console.log('Add Model')
-  await page.getByTestId('open-model-list-button').locator('span').click();
-  await page.getByTestId('add-new-models-button').click();
-  await page.locator('#api').check();
-  await page.getByTestId('newmodel-next-button').click();
-  await page.click("button[data-testid=editConfigIconBtn]");
-  await page.locator('input[name="name"]').fill("TC009");
-  await page.locator('textarea[name="description"]').fill("My test API description");
-  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
-  await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill("https://fake.host/predict/tc009");
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('age');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('gender');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('race');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('income');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.locator('input[name="reqBodyParamName"]').click();
-  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
-  await page.getByTestId('addRequestPropertyBtn').click();
-  await page.click('button[type="submit"]');
-  await expect(page.getByText("New API Configuration created")).toBeVisible();
-  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
-  await page.getByRole('img', { name: 'AI Verify' }).click();
-
-  console.log('Create A Project')
-  await page.getByTestId('new-project-button').getByText('Create New Project').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
-  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
-  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
-  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
-  await page.getByLabel('Report TitleUse Project Name').check();
-  await page.getByPlaceholder('Enter the company name').click();
-  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
-  await page.getByText('Next').click();
-
-  console.log('Select Template')
-  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
-  await page.getByText('Next').click();
-
-  console.log('Canvas')
-  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
-  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
-  await page.getByText('Next').click();
-
-  console.log('Select Dataset & Ground Truth')
-  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: 'Choose Dataset' }).click();
-  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
-  await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: '​' }).click();
-  await page.getByRole('option', { name: 'donation' }).nth(1).click();
-
-  console.log('Select Model')
-  await page.getByRole('button', { name: 'Choose Model' }).click();
-  await page.getByText('TC009').click();
-  await page.getByRole('button', { name: 'Use Model' }).click();
-  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
-  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
-  await page.getByText("total_donated_amount").click()
-  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
-  await page.getByText("number_of_donation").click()
-  await page.getByRole('button', { name: 'OK' }).click();
-
-  console.log('Fairness Metrics Toolbox for Regression')
-  await page.getByRole('button', { name: 'Open' }).click();
-  await page.getByLabel('sensitive_feature-0 *').click();
-  await page.getByLabel('sensitive_feature-0 *').fill('donation');
-  await page.getByRole('button', { name: 'OK' }).click();
-  await page.getByText('Next').click();
-  await page.getByRole('button', { name: 'Proceed' }).click();
-
-  console.log('Running Tests & Generating Report')
-  const [page1] = await Promise.all([
-    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
-    expect(page.getByText("Error encountered while running test")).toBeVisible()
-  ]);
-
-  console.log('Test Complete & Report Generated')
-});
-
 test(`FMTC Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({
@@ -2106,6 +1500,126 @@ test("Create API Model Configuration (POST request to Test additional headers)",
   console.log('Test Complete & Report Generated')
 });
 
+test("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
+  })
+  
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+  
+  console.log('Add Dataset')
+  await page.getByTestId('open-dataset-list-button').locator('span').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Click to Browse').click();
+  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.getByTestId('datasets-back-button').click();
+
+  console.log('Add Model')
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.locator('#api').check();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.click("button[data-testid=editConfigIconBtn]");
+  await page.locator('input[name="name"]').fill("TC009");
+  await page.locator('textarea[name="description"]').fill("My test API description");
+  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  await page.getByText("Regression").click();
+  await page.locator('input[name="modelAPI.url"]').fill("https://fake.host/predict/tc009");
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('age');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('race');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('income');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.click('button[type="submit"]');
+  await expect(page.getByText("New API Configuration created")).toBeVisible();
+  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.getByText('Next').click();
+
+  console.log('Select Template')
+  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
+  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'donation' }).nth(1).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('TC009').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
+  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
+  await page.getByText("total_donated_amount").click()
+  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("number_of_donation").click()
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Fairness Metrics Toolbox for Regression')
+  await page.getByRole('button', { name: 'Open' }).click();
+  await page.getByLabel('sensitive_feature-0 *').click();
+  await page.getByLabel('sensitive_feature-0 *').fill('donation');
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
+    expect(page.getByText("Error encountered while running test")).toBeVisible()
+  ]);
+
+  console.log('Test Complete & Report Generated')
+});
+
 test("Create API Model Configuration (POST request with application/json request body with array support and array response of integers)", async () => {
 
   const browser = await chromium.launch();
@@ -3270,6 +2784,492 @@ test("Mock Response HTTP 429", async () => {
   const [page1] = await Promise.all([
     await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
     expect(page.getByText("Error encountered while running test")).toBeHidden()
+  ]);
+
+  console.log('Test Complete & Report Generated')
+})
+
+test("Mock Response HTTP 500", async () => {
+
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
+  })
+
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+
+  console.log('Add Dataset')
+  await page.getByTestId('open-dataset-list-button').locator('span').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Click to Browse').click();
+  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/pickle_pandas_mock_regression_donation_testing.sav');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.getByTestId('datasets-back-button').click();
+
+  console.log('Add Model')
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.locator('#api').check()
+  await page.getByTestId('newmodel-next-button').click();
+  await page.click("button[data-testid=editConfigIconBtn]");
+  await page.locator('input[name="name"]').fill("Mock Response HTTP 500");
+  await page.locator('textarea[name="description"]').fill("My test API description");
+  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  await page.getByText("Regression").click();
+  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc016");
+  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("multipart/form-data").click()
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('age');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('race');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('income');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.getByText('Authentication Settings').click();
+  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText('Basic Auth').click();
+  await page.getByLabel('Username').fill('test');
+  await page.getByLabel('Password').fill('p@ssword');
+  await page.click('button[type="submit"]');
+  await expect(page.getByText("New API Configuration created")).toBeVisible();
+  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.getByText('Next').click();
+
+  console.log('Select Template')
+  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
+  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'donation' }).nth(1).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('Mock Response HTTP 500').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
+  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
+  await page.getByText("total_donated_amount").click()
+  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("number_of_donation").click()
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Fairness Metrics Toolbox for Regression')
+  await page.getByRole('button', { name: 'Open' }).click();
+  await page.getByLabel('sensitive_feature-0 *').click();
+  await page.getByLabel('sensitive_feature-0 *').fill('donation');
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
+    expect(page.getByText("Error encountered while running test")).toBeVisible()
+  ]);
+
+  console.log('Test Complete & Report Generated')
+
+});
+
+test("Mock Response HTTP 502", async () => {
+
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
+  })
+
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+
+  console.log('Add Model')
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.locator('#api').check();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.click("button[data-testid=editConfigIconBtn]");
+  await page.locator('input[name="name"]').fill("Mock Response HTTP 502");
+  await page.locator('textarea[name="description"]').fill("My test API description");
+  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  await page.getByText("Regression").click();
+  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc017");
+  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("multipart/form-data").click()
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('age');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('race');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('income');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.getByText('Authentication Settings').click();
+  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText('Basic Auth').click();
+  await page.getByLabel('Username').fill('test');
+  await page.getByLabel('Password').fill('p@ssword');
+  await page.click('button[type="submit"]');
+  await expect(page.getByText("New API Configuration created")).toBeVisible();
+  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.getByText('Next').click();
+
+  console.log('Select Template')
+  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
+  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'donation' }).nth(1).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('Mock Response HTTP 502').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
+  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
+  await page.getByText("total_donated_amount").click()
+  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("number_of_donation").click()
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Fairness Metrics Toolbox for Regression')
+  await page.getByRole('button', { name: 'Open' }).click();
+  await page.getByLabel('sensitive_feature-0 *').click();
+  await page.getByLabel('sensitive_feature-0 *').fill('donation');
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
+    expect(page.getByText("Error encountered while running test")).toBeVisible()
+  ]);
+
+  console.log('Test Complete & Report Generated')
+})
+
+test("Mock Response HTTP 503", async () => {
+
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
+  })
+
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+
+  console.log('Add Model')
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.locator('#api').check();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.click("button[data-testid=editConfigIconBtn]");
+  await page.locator('input[name="name"]').fill("Mock Response HTTP 503");
+  await page.locator('textarea[name="description"]').fill("My test API description");
+  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  await page.getByText("Regression").click();
+  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc018");
+  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("multipart/form-data").click()
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('age');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('race');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('income');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.getByText('Authentication Settings').click();
+  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText('Basic Auth').click();
+  await page.getByLabel('Username').fill('test');
+  await page.getByLabel('Password').fill('p@ssword');
+  await page.click('button[type="submit"]');
+  await expect(page.getByText("New API Configuration created")).toBeVisible();
+  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.getByText('Next').click();
+
+  console.log('Select Template')
+  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
+  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'donation' }).nth(1).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('Mock Response HTTP 503').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
+  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
+  await page.getByText("total_donated_amount").click()
+  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("number_of_donation").click()
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Fairness Metrics Toolbox for Regression')
+  await page.getByRole('button', { name: 'Open' }).click();
+  await page.getByLabel('sensitive_feature-0 *').click();
+  await page.getByLabel('sensitive_feature-0 *').fill('donation');
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
+    expect(page.getByText("Error encountered while running test")).toBeVisible()
+  ]);
+
+  console.log('Test Complete & Report Generated')
+})
+
+test("Mock Response HTTP 504", async () => {
+
+  const browser = await chromium.launch();
+  const context = await browser.newContext({
+    // recordVideo: {
+    //   dir: "./test-results"
+    // }
+  })
+
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+  await page.getByText('Models & Data').click();
+
+  console.log('Add Model')
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.locator('#api').check();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.click("button[data-testid=editConfigIconBtn]");
+  await page.locator('input[name="name"]').fill("Mock Response HTTP 504");
+  await page.locator('textarea[name="description"]').fill("My test API description");
+  await page.click('label[for="modelType"] .aiv__dropdown-indicator');
+  await page.getByText("Regression").click();
+  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc019");
+  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("multipart/form-data").click()
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('age');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('gender');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('race');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('income');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('employment_length');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('total_donated');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.locator('input[name="reqBodyParamName"]').click();
+  await page.locator('input[name="reqBodyParamName"]').fill('num_donation');
+  await page.getByTestId('addRequestPropertyBtn').click();
+  await page.getByText('Authentication Settings').click();
+  await page.locator('.newModelApiConfig_tabContent__SMjQa > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText('Basic Auth').click();
+  await page.getByLabel('Username').fill('test');
+  await page.getByLabel('Password').fill('p@ssword');
+  await page.click('button[type="submit"]');
+  await expect(page.getByText("New API Configuration created")).toBeVisible();
+  await page.locator('#aivModal').getByRole('button', { name: 'OK' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.getByText('Next').click();
+
+  console.log('Select Template')
+  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'Fairness for Regression' }).click();
+  await page.getByText('Bar Chart (MAE)').dragTo(page.locator('div.react-grid-layout'));
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('pickle_pandas_mock_regression_donation_testing.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'donation' }).nth(1).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('Mock Response HTTP 504').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+  await page.getByRole('button', { name: 'Map API Request Parameters' }).click();
+  await page.locator('div:nth-child(8) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator > .mui-style-8mmkcg').click();
+  await page.getByText("total_donated_amount").click()
+  await page.locator('div:nth-child(9) > .requestParamsMapModal_datasetCell__A1Ti7 > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
+  await page.getByText("number_of_donation").click()
+  await page.getByRole('button', { name: 'OK' }).click();
+
+  console.log('Fairness Metrics Toolbox for Regression')
+  await page.getByRole('button', { name: 'Open' }).click();
+  await page.getByLabel('sensitive_feature-0 *').click();
+  await page.getByLabel('sensitive_feature-0 *').fill('donation');
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    await page.getByText("Error encountered while running test").waitFor({ state: "visible" }),
+    expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
   console.log('Test Complete & Report Generated')
