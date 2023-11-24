@@ -689,7 +689,8 @@ test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   console.log('Running Tests & Generating Report')
   const [page1] = await Promise.all([
     page.waitForEvent('popup'),
-    page.getByRole('button', { name: 'View Report' }).click()
+    page.getByRole('button', { name: 'View Report' }).click(),
+    expect(page.getByText('Test Completed')).toBeVisible()
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
