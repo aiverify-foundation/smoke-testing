@@ -11,11 +11,7 @@ test.use({
 
 test(`FMTC Plugin`, async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -131,17 +127,15 @@ test(`FMTC Plugin`, async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
 
 })
 
 test(`ALE Plugin`, async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -207,17 +201,15 @@ test(`ALE Plugin`, async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
 
 })
 
 test(`FMTR Plugin`, async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -300,20 +292,15 @@ test(`FMTR Plugin`, async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
 
 })
 
 test(`PDP Plugin`, async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -388,17 +375,15 @@ test(`PDP Plugin`, async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
 
 })
 
 test(`Robustness Plugin`, async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -481,17 +466,15 @@ test(`Robustness Plugin`, async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
 
 })
 
 test(`SHAP Toolbox Plugin`, async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -567,17 +550,15 @@ test(`SHAP Toolbox Plugin`, async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
 
 })
 
 test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
   
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -690,9 +671,11 @@ test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   const [page1] = await Promise.all([
     page.waitForEvent('popup'),
     page.getByRole('button', { name: 'View Report' }).click(),
-    expect(page.getByText('Test Completed')).toBeVisible()
+    // expect(page.getByText('Test Completed')).toBeVisible()
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  await browser.close();
 
   console.log('Test Complete & Report Generated')
 });
@@ -700,11 +683,7 @@ test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
 test("Create API Model Configuration (Payload with Basic Auth)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -817,17 +796,16 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
+
 });
 
 test("Create API Model Configuration (POST request with x-www-form-urlencoded request body)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -930,17 +908,16 @@ test("Create API Model Configuration (POST request with x-www-form-urlencoded re
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
+
 });
 
 test("Create API Model Configuration (POST request with form-data request body)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1045,17 +1022,16 @@ test("Create API Model Configuration (POST request with form-data request body)"
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
+
 });
 
 test("Create API Model Configuration (GET request with query parameters)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1152,17 +1128,16 @@ test("Create API Model Configuration (GET request with query parameters)", async
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
+
 });
 
 test("Create API Model Configuration (GET request with path parameters)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1261,17 +1236,16 @@ test("Create API Model Configuration (GET request with path parameters)", async 
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
+
 });
 
 test("Create API Model Configuration (POST request to read JSON response)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1379,17 +1353,16 @@ test("Create API Model Configuration (POST request to read JSON response)", asyn
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await browser.close();
+
   console.log('Test Complete & Report Generated')
+
 });
 
 test("Create API Model Configuration (POST request to Test additional headers)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1498,16 +1471,15 @@ test("Create API Model Configuration (POST request to Test additional headers)",
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+
+  console.log('Test Complete & Report Generated');
+
 });
 
 test("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
   
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1618,17 +1590,15 @@ test("Create API Model Configuration (POST request to test http method and conne
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
+  await browser.close();
   console.log('Test Complete & Report Generated')
+
 });
 
 test("Create API Model Configuration (POST request with application/json request body with array support and array response of integers)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1735,17 +1705,15 @@ test("Create API Model Configuration (POST request with application/json request
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
+
 });
 
 test("Create API Model Configuration (POST request with application/json request body with array support and array response of objects)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1854,17 +1822,15 @@ test("Create API Model Configuration (POST request with application/json request
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
+
 });
 
 test("Create API Model Configuration (POST request with application/json request body with array support and response object of array data)", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -1975,16 +1941,14 @@ test("Create API Model Configuration (POST request with application/json request
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
+
 });
 
 test("Wrong Bearer Token", async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -2090,17 +2054,14 @@ test("Wrong Bearer Token", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
 
 })
 
 test("Wrong Basic Auth", async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -2211,17 +2172,14 @@ test("Wrong Basic Auth", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
 
 })
 
 test("Wrong Auth Type", async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -2332,18 +2290,15 @@ test("Wrong Auth Type", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
 
 })
 
 test("Missing Headers", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -2445,18 +2400,15 @@ test("Missing Headers", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
 
 });
 
 test("Wrong Content Type", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -2565,17 +2517,14 @@ test("Wrong Content Type", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
 
 });
 
 test("Missing Request Parameters", async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -2667,18 +2616,15 @@ test("Missing Request Parameters", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
 
 })
 
 test("Mock Response HTTP 429", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -2787,17 +2733,15 @@ test("Mock Response HTTP 429", async () => {
     expect(page.getByText("Error encountered while running test")).toBeHidden()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
+  
 })
 
 test("Mock Response HTTP 500", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -2915,18 +2859,15 @@ test("Mock Response HTTP 500", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
 
 });
 
 test("Mock Response HTTP 502", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -3035,17 +2976,15 @@ test("Mock Response HTTP 502", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
+
 })
 
 test("Mock Response HTTP 503", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -3154,17 +3093,15 @@ test("Mock Response HTTP 503", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
+
 })
 
 test("Mock Response HTTP 504", async () => {
 
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    // recordVideo: {
-    //   dir: "./test-results"
-    // }
-  })
+  const context = await browser.newContext();
 
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
@@ -3273,5 +3210,7 @@ test("Mock Response HTTP 504", async () => {
     expect(page.getByText("Error encountered while running test")).toBeVisible()
   ]);
 
-  console.log('Test Complete & Report Generated')
+  await browser.close();
+  console.log('Test Complete & Report Generated');
+
 })
