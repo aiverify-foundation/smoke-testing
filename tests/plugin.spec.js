@@ -1,6 +1,7 @@
 import { test, expect, chromium } from '@playwright/test';
 
 let url = process.env.ENVIRONMENT_URL
+let port = "5000"
 
 test.use({
   viewport: {
@@ -583,7 +584,7 @@ test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc001");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc001");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.getByTestId('addRequestPropertyBtn').click();
@@ -671,7 +672,7 @@ test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   const [page1] = await Promise.all([
     page.waitForEvent('popup'),
     page.getByRole('button', { name: 'View Report' }).click(),
-    // expect(page.getByText('Test Completed')).toBeVisible()
+    expect(page.getByText('Test Completed')).toBeVisible()
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
@@ -699,7 +700,7 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc002");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc002");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.getByTestId('addRequestPropertyBtn').click();
@@ -821,7 +822,7 @@ test("Create API Model Configuration (POST request with x-www-form-urlencoded re
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc003");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc003");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.getByTestId('addRequestPropertyBtn').click();
@@ -933,7 +934,7 @@ test("Create API Model Configuration (POST request with form-data request body)"
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc004");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc004");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("multipart/form-data").click();
   await page.locator('input[name="reqBodyParamName"]').click();
@@ -1049,7 +1050,7 @@ test("Create API Model Configuration (GET request with query parameters)", async
   await page.getByText("Regression").click();
   await page.locator('.newModelApiConfig_rightSection__9aQPF > div > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("GET").click()
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc005");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc005");
   await page.getByTestId('urlParamInputRow').getByLabel('').fill('age');
   await page.getByTestId('addUrlParamBtn').click();
   await page.locator('input[name="urlParamName"]').fill('gender');
@@ -1155,7 +1156,7 @@ test("Create API Model Configuration (GET request with path parameters)", async 
   await page.getByText("Regression").click();
   await page.locator('.newModelApiConfig_rightSection__9aQPF > div > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("GET").click()
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc006");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc006");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("Path").click()
   await page.getByTestId('urlParamInputRow').getByLabel('').fill('age');
@@ -1261,7 +1262,7 @@ test("Create API Model Configuration (POST request to read JSON response)", asyn
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc007");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc007");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.getByTestId('addRequestPropertyBtn').click();
@@ -1378,7 +1379,7 @@ test("Create API Model Configuration (POST request to Test additional headers)",
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc008");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc008");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.getByTestId('addRequestPropertyBtn').click();
@@ -1614,7 +1615,7 @@ test("Create API Model Configuration (POST request with application/json request
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc013");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc013");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div:nth-child(2) > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText('enabled').click()
   await page.getByLabel('Batch LimitDefaults to -1, which means there is no limit.').fill('100');
@@ -1729,7 +1730,7 @@ test("Create API Model Configuration (POST request with application/json request
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc014");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc014");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div:nth-child(2) > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText('enabled').click()
   await page.getByLabel('Batch LimitDefaults to -1, which means there is no limit.').fill('100');
@@ -1846,7 +1847,7 @@ test("Create API Model Configuration (POST request with application/json request
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc015");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc015");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div:nth-child(2) > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText('enabled').click()
   await page.getByLabel('Batch LimitDefaults to -1, which means there is no limit.').fill('100');
@@ -1964,7 +1965,7 @@ test("Wrong Bearer Token", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc001");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc001");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.getByTestId('addRequestPropertyBtn').click();
@@ -2077,7 +2078,7 @@ test("Wrong Basic Auth", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc002");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc002");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.locator('.newModelApiConfig_keyValCol__VrEll > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
@@ -2195,7 +2196,7 @@ test("Wrong Auth Type", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc001");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc001");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.locator('.newModelApiConfig_keyValCol__VrEll > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
@@ -2314,7 +2315,7 @@ test("Missing Headers", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc008");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc008");
   await page.locator('input[name="reqBodyParamName"]').click();
   await page.locator('input[name="reqBodyParamName"]').fill('age');
   await page.getByTestId('addRequestPropertyBtn').click();
@@ -2424,7 +2425,7 @@ test("Wrong Content Type", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc002");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc002");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("multipart/form-data").click()
   await page.locator('input[name="reqBodyParamName"]').click();
@@ -2542,7 +2543,7 @@ test("Missing Request Parameters", async () => {
   await page.getByText("Regression").click();
   await page.locator('.newModelApiConfig_rightSection__9aQPF > div > div > .selectInput_selectInput__Dtfb2 > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("GET").click()
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc005");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc005");
   await page.getByTestId('urlParamInputRow').getByLabel('').fill('age');
   await page.getByTestId('addUrlParamBtn').click();
   await page.locator('input[name="urlParamName"]').fill('gender');
@@ -2640,7 +2641,7 @@ test("Mock Response HTTP 429", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc020");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc020");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("multipart/form-data").click()
   await page.locator('input[name="reqBodyParamName"]').click();
@@ -2766,7 +2767,7 @@ test("Mock Response HTTP 500", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc016");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc016");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("multipart/form-data").click()
   await page.locator('input[name="reqBodyParamName"]').click();
@@ -2883,7 +2884,7 @@ test("Mock Response HTTP 502", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc017");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc017");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("multipart/form-data").click()
   await page.locator('input[name="reqBodyParamName"]').click();
@@ -3000,7 +3001,7 @@ test("Mock Response HTTP 503", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc018");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc018");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("multipart/form-data").click()
   await page.locator('input[name="reqBodyParamName"]').click();
@@ -3117,7 +3118,7 @@ test("Mock Response HTTP 504", async () => {
   await page.locator('textarea[name="description"]').fill("My test API description");
   await page.click('label[for="modelType"] .aiv__dropdown-indicator');
   await page.getByText("Regression").click();
-  await page.locator('input[name="modelAPI.url"]').fill(url + "/predict/tc019");
+  await page.locator('input[name="modelAPI.url"]').fill(url + ":" + port + "/predict/tc019");
   await page.locator('.newModelApiConfig_tabContent__SMjQa > div > div > div > label > .mui-style-fyq6mk-container > .aiv__control > .aiv__indicators > .aiv__indicator').click();
   await page.getByText("multipart/form-data").click()
   await page.locator('input[name="reqBodyParamName"]').click();
