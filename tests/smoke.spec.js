@@ -162,8 +162,6 @@ TESTCASEPARAMS.forEach(testCase =>
       await page.getByRole('button', { name: 'Fairness for Classification' }).click();
       await page.getByText('Bar Chart (Selected)').dragTo(page.locator('div.react-grid-layout'));
     }
-
-    await page.getByText('Next').click();
     await page.getByText('Next').click();
 
     console.log('Select Dataset & Ground Truth')
