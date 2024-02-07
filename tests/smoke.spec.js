@@ -404,8 +404,8 @@ TESTCASEPARAMS.forEach(testCase =>
 
     console.log('Running Tests & Generating Report')
     const [page1] = await Promise.all([
-      page.getByText("Error encountered while running test").waitFor({ state: "hidden" }),
-      expect(page.getByText("Error encountered while running test")).toBeHidden(),
+      page.getByText("Test Error").waitFor({ state: "hidden" }),
+      expect(page.getByText("Test Error")).toBeHidden(),
       page.waitForEvent('popup'),
       page.getByRole('button', { name: 'View Report' }).click()
     ]);
