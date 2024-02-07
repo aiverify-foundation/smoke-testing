@@ -162,12 +162,13 @@ TESTCASEPARAMS.forEach(testCase =>
       await page.getByRole('button', { name: 'Fairness for Classification' }).click();
       await page.getByText('Bar Chart (Selected)').dragTo(page.locator('div.react-grid-layout'));
     }
-    // await page.getByText('Next').click();
+    await page.getByText('Next').click();
     await page.getByText('Next').click();
 
     console.log('Select Dataset & Ground Truth')
     await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
     await page.getByText(testCase.dataFileName).click();
+    console.log('Passthrough Here')
     await page.getByRole('button', { name: 'Use Dataset' }).click();
     await page.getByRole('button', { name: 'Choose Dataset' }).click();
     await page.getByText(testCase.groundTruthFileName).click();
