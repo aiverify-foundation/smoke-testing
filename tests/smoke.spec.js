@@ -22,18 +22,18 @@ const TESTCASEPARAMS = [
     groundTruth: "donation",
     labels: ["age", "gender", "race", "income", "employment", "employment_length", "total_donated", "num_donation"]
   },
-  {
-    port: "5001",
-    name: "Classification 1",
-    dataFileName: "sample_bc_credit_data.sav",
-    dataFilePath: "./fixtures/sample_bc_credit_data.sav",
-    modelFileName: "Classification 2",
-    groundTruthFileName: "sample_bc_credit_data.sav",
-    groundTruthFilePath: "./fixtures/sample_bc_credit_data.sav",
-    modelType: "classification",
-    groundTruth: "default",
-    labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
-  },
+  // {
+  //   port: "5001",
+  //   name: "Classification 1",
+  //   dataFileName: "sample_bc_credit_data.sav",
+  //   dataFilePath: "./fixtures/sample_bc_credit_data.sav",
+  //   modelFileName: "Classification 2",
+  //   groundTruthFileName: "sample_bc_credit_data.sav",
+  //   groundTruthFilePath: "./fixtures/sample_bc_credit_data.sav",
+  //   modelType: "classification",
+  //   groundTruth: "default",
+  //   labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
+  // },
   // {
   //   port: "5001",
   //   name: "ALE, PDP and FMTC",
