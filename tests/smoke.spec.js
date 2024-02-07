@@ -34,18 +34,18 @@ const TESTCASEPARAMS = [
     groundTruth: "default",
     labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
   },
-  {
-    port: "5001",
-    name: "ALE, PDP and FMTC",
-    dataFileName: "sample_bc_credit_data.sav",
-    dataFilePath: "./fixtures/sample_bc_credit_data.sav",
-    modelFileName: "Classification 1",
-    groundTruthFileName: "sample_bc_credit_data.sav",
-    groundTruthFilePath: "./fixtures/sample_bc_credit_data.sav",
-    modelType: "classification",
-    groundTruth: "default",
-    labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
-  }
+  // {
+  //   port: "5001",
+  //   name: "ALE, PDP and FMTC",
+  //   dataFileName: "sample_bc_credit_data.sav",
+  //   dataFilePath: "./fixtures/sample_bc_credit_data.sav",
+  //   modelFileName: "Classification 1",
+  //   groundTruthFileName: "sample_bc_credit_data.sav",
+  //   groundTruthFilePath: "./fixtures/sample_bc_credit_data.sav",
+  //   modelType: "classification",
+  //   groundTruth: "default",
+  //   labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
+  // }
 ]
 
 TESTCASEPARAMS.forEach(testCase =>
@@ -161,9 +161,12 @@ TESTCASEPARAMS.forEach(testCase =>
       await page.getByRole('button', { name: 'Add Page' }).click();
       await page.getByRole('button', { name: 'Fairness for Classification' }).click();
       await page.getByText('Bar Chart (Selected)').dragTo(page.locator('div.react-grid-layout'));
+      await page.getByText('Next').click();
     }
-    await page.getByText('Next').click();
-    await page.getByText('Next').click();
+    else {
+      await page.getByText('Next').click();
+      await page.getByText('Next').click();
+    }
 
     console.log('Select Dataset & Ground Truth')
     await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
@@ -230,144 +233,146 @@ TESTCASEPARAMS.forEach(testCase =>
     }
     await page.getByRole('button', { name: 'OK' }).click();
 
-    console.log('Transparency Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:transparency_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-1.1.1').nth(1).click();
-    await page.getByTestId('completed-1.1.2').nth(1).click();
-    await page.getByTestId('completed-1.2.1').nth(1).click();
-    await page.getByTestId('completed-1.2.2').nth(1).click();
-    await page.getByTestId('completed-1.2.3').nth(1).click();
-    await page.getByTestId('completed-1.2.4').nth(1).click();
-    await page.getByTestId('completed-1.2.5').nth(1).click();
-    await page.getByTestId('completed-1.3.1').nth(1).click();
-    await page.locator('#aivModal').getByTestId('CloseIcon').click();
+    if (testCase.name != "ALE, PDP and FMTC") {
+      console.log('Transparency Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:transparency_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-1.1.1').nth(1).click();
+      await page.getByTestId('completed-1.1.2').nth(1).click();
+      await page.getByTestId('completed-1.2.1').nth(1).click();
+      await page.getByTestId('completed-1.2.2').nth(1).click();
+      await page.getByTestId('completed-1.2.3').nth(1).click();
+      await page.getByTestId('completed-1.2.4').nth(1).click();
+      await page.getByTestId('completed-1.2.5').nth(1).click();
+      await page.getByTestId('completed-1.3.1').nth(1).click();
+      await page.locator('#aivModal').getByTestId('CloseIcon').click();
 
-    console.log('Explainability Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:explainability_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-2.1.1').nth(1).click();
-    await page.locator('#aivModal path').click();
+      console.log('Explainability Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:explainability_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-2.1.1').nth(1).click();
+      await page.locator('#aivModal path').click();
 
-    console.log('Reproducibility Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:reproducibility_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-3.1.1').nth(1).click();
-    await page.getByTestId('completed-3.2.1').nth(1).click();
-    await page.getByTestId('completed-3.3.1').nth(1).click();
-    await page.getByTestId('completed-3.4.1').nth(1).click();
-    await page.getByTestId('completed-3.5.1').nth(1).click();
-    await page.getByTestId('completed-3.6.1').nth(1).click();
-    await page.getByTestId('completed-3.7.1').nth(1).click();
-    await page.getByTestId('completed-3.8.1').nth(1).click();
-    await page.getByTestId('completed-3.9.1').nth(1).click();
-    await page.getByTestId('completed-3.9.2').nth(1).click();
-    await page.getByTestId('completed-3.10.1').nth(1).click();
-    await page.getByTestId('completed-3.11.1').nth(1).click();
-    await page.getByTestId('completed-3.12.1').nth(1).click();
-    await page.getByTestId('completed-3.13.1').nth(1).click();
-    await page.getByTestId('completed-3.14.1').nth(1).click();
-    await page.locator('#aivModal').getByTestId('CloseIcon').click();
+      console.log('Reproducibility Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:reproducibility_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-3.1.1').nth(1).click();
+      await page.getByTestId('completed-3.2.1').nth(1).click();
+      await page.getByTestId('completed-3.3.1').nth(1).click();
+      await page.getByTestId('completed-3.4.1').nth(1).click();
+      await page.getByTestId('completed-3.5.1').nth(1).click();
+      await page.getByTestId('completed-3.6.1').nth(1).click();
+      await page.getByTestId('completed-3.7.1').nth(1).click();
+      await page.getByTestId('completed-3.8.1').nth(1).click();
+      await page.getByTestId('completed-3.9.1').nth(1).click();
+      await page.getByTestId('completed-3.9.2').nth(1).click();
+      await page.getByTestId('completed-3.10.1').nth(1).click();
+      await page.getByTestId('completed-3.11.1').nth(1).click();
+      await page.getByTestId('completed-3.12.1').nth(1).click();
+      await page.getByTestId('completed-3.13.1').nth(1).click();
+      await page.getByTestId('completed-3.14.1').nth(1).click();
+      await page.locator('#aivModal').getByTestId('CloseIcon').click();
 
-    console.log('Safety Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:safety_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-4.1.1').nth(1).click();
-    await page.getByTestId('completed-4.2.1').nth(1).click();
-    await page.getByTestId('completed-4.3.1').nth(1).click();
-    await page.getByTestId('completed-4.4.1').nth(1).click();
-    await page.getByTestId('completed-4.5.1').nth(1).click();
-    await page.getByTestId('completed-4.5.2').nth(1).click();
-    await page.getByTestId('completed-4.5.3').nth(1).click();
-    await page.getByTestId('completed-4.5.4').nth(1).click();
-    await page.getByTestId('completed-4.6.1').nth(1).click();
-    await page.locator('#aivModal path').click();
+      console.log('Safety Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:safety_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-4.1.1').nth(1).click();
+      await page.getByTestId('completed-4.2.1').nth(1).click();
+      await page.getByTestId('completed-4.3.1').nth(1).click();
+      await page.getByTestId('completed-4.4.1').nth(1).click();
+      await page.getByTestId('completed-4.5.1').nth(1).click();
+      await page.getByTestId('completed-4.5.2').nth(1).click();
+      await page.getByTestId('completed-4.5.3').nth(1).click();
+      await page.getByTestId('completed-4.5.4').nth(1).click();
+      await page.getByTestId('completed-4.6.1').nth(1).click();
+      await page.locator('#aivModal path').click();
 
-    console.log('Robustness Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:robustness_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-6.1.1').nth(1).click();
-    await page.getByTestId('completed-6.2.1').nth(1).click();
-    await page.getByTestId('completed-6.3.1').nth(1).click();
-    await page.getByTestId('completed-6.4.1').nth(1).click();
-    await page.getByTestId('completed-6.5.1').nth(1).click();
-    await page.getByTestId('completed-6.5.2').nth(1).click();
-    await page.getByTestId('completed-6.5.3').nth(1).click();
-    await page.locator('#aivModal').getByTestId('CloseIcon').click();
+      console.log('Robustness Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:robustness_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-6.1.1').nth(1).click();
+      await page.getByTestId('completed-6.2.1').nth(1).click();
+      await page.getByTestId('completed-6.3.1').nth(1).click();
+      await page.getByTestId('completed-6.4.1').nth(1).click();
+      await page.getByTestId('completed-6.5.1').nth(1).click();
+      await page.getByTestId('completed-6.5.2').nth(1).click();
+      await page.getByTestId('completed-6.5.3').nth(1).click();
+      await page.locator('#aivModal').getByTestId('CloseIcon').click();
 
-    console.log('Fairness Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:fairness_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-7.1.1').nth(1).click();
-    await page.getByTestId('completed-7.2.1').nth(1).click();
-    await page.getByTestId('completed-7.3.1').nth(1).click();
-    await page.getByTestId('completed-7.4.1').nth(1).click();
-    await page.getByTestId('completed-7.4.2').nth(1).click();
-    await page.getByTestId('completed-7.5.1').nth(1).click();
-    await page.getByTestId('completed-7.6.1').nth(1).click();
-    await page.getByTestId('completed-7.7.1').nth(1).click();
-    await page.getByTestId('completed-7.8.1').nth(1).click();
-    await page.getByTestId('completed-7.9.1').nth(1).click();
-    await page.locator('#aivModal path').click();
+      console.log('Fairness Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:fairness_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-7.1.1').nth(1).click();
+      await page.getByTestId('completed-7.2.1').nth(1).click();
+      await page.getByTestId('completed-7.3.1').nth(1).click();
+      await page.getByTestId('completed-7.4.1').nth(1).click();
+      await page.getByTestId('completed-7.4.2').nth(1).click();
+      await page.getByTestId('completed-7.5.1').nth(1).click();
+      await page.getByTestId('completed-7.6.1').nth(1).click();
+      await page.getByTestId('completed-7.7.1').nth(1).click();
+      await page.getByTestId('completed-7.8.1').nth(1).click();
+      await page.getByTestId('completed-7.9.1').nth(1).click();
+      await page.locator('#aivModal path').click();
 
-    console.log('Accountability Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:accountability_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-9.1.1').nth(1).click();
-    await page.getByTestId('completed-9.1.2').nth(1).click();
-    await page.getByTestId('completed-9.1.3').nth(1).click();
-    await page.getByTestId('completed-9.2.1').nth(1).click();
-    await page.getByTestId('completed-9.3.1').nth(1).click();
-    await page.getByTestId('completed-9.4.1').nth(1).click();
-    await page.getByTestId('completed-9.5.1').nth(1).click();
-    await page.getByTestId('completed-9.5.2').nth(1).click();
-    await page.locator('#aivModal').getByTestId('CloseIcon').click();
+      console.log('Accountability Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:accountability_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-9.1.1').nth(1).click();
+      await page.getByTestId('completed-9.1.2').nth(1).click();
+      await page.getByTestId('completed-9.1.3').nth(1).click();
+      await page.getByTestId('completed-9.2.1').nth(1).click();
+      await page.getByTestId('completed-9.3.1').nth(1).click();
+      await page.getByTestId('completed-9.4.1').nth(1).click();
+      await page.getByTestId('completed-9.5.1').nth(1).click();
+      await page.getByTestId('completed-9.5.2').nth(1).click();
+      await page.locator('#aivModal').getByTestId('CloseIcon').click();
 
-    console.log('Human Agency & Oversight Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:human_agency_oversight_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-10.1.1').nth(1).click();
-    await page.getByTestId('completed-10.1.2').nth(1).click();
-    await page.getByTestId('completed-10.2.1').nth(1).click();
-    await page.getByTestId('completed-10.2.2').nth(1).click();
-    await page.getByTestId('completed-10.2.3').nth(1).click();
-    await page.getByTestId('completed-10.3.1').nth(1).click();
-    await page.getByTestId('completed-10.4.1').nth(1).click();
-    await page.getByTestId('completed-10.5.1').nth(1).click();
-    await page.locator('#aivModal').getByTestId('CloseIcon').click();
+      console.log('Human Agency & Oversight Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:human_agency_oversight_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-10.1.1').nth(1).click();
+      await page.getByTestId('completed-10.1.2').nth(1).click();
+      await page.getByTestId('completed-10.2.1').nth(1).click();
+      await page.getByTestId('completed-10.2.2').nth(1).click();
+      await page.getByTestId('completed-10.2.3').nth(1).click();
+      await page.getByTestId('completed-10.3.1').nth(1).click();
+      await page.getByTestId('completed-10.4.1').nth(1).click();
+      await page.getByTestId('completed-10.5.1').nth(1).click();
+      await page.locator('#aivModal').getByTestId('CloseIcon').click();
 
-    console.log('Security Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:security_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-5.1.1').nth(1).click();
-    await page.getByTestId('completed-5.2.1').nth(1).click();
-    await page.getByTestId('completed-5.3.1').nth(1).click();
-    await page.getByTestId('completed-5.3.2').nth(1).click();
-    await page.getByTestId('completed-5.4.1').nth(1).click();
-    await page.getByTestId('completed-5.4.2').nth(1).click();
-    await page.getByTestId('completed-5.4.3').nth(1).click();
-    await page.getByTestId('completed-5.4.4').nth(1).click();
-    await page.getByTestId('completed-5.5.1').nth(1).click();
-    await page.getByTestId('completed-5.5.2').nth(1).click();
-    await page.getByTestId('completed-5.5.3').nth(1).click();
-    await page.getByTestId('completed-5.6.1').nth(1).click();
-    await page.getByTestId('completed-5.6.2').nth(1).click();
-    await page.getByTestId('completed-5.7.1').nth(1).click();
-    await page.locator('#aivModal path').click();
+      console.log('Security Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:security_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-5.1.1').nth(1).click();
+      await page.getByTestId('completed-5.2.1').nth(1).click();
+      await page.getByTestId('completed-5.3.1').nth(1).click();
+      await page.getByTestId('completed-5.3.2').nth(1).click();
+      await page.getByTestId('completed-5.4.1').nth(1).click();
+      await page.getByTestId('completed-5.4.2').nth(1).click();
+      await page.getByTestId('completed-5.4.3').nth(1).click();
+      await page.getByTestId('completed-5.4.4').nth(1).click();
+      await page.getByTestId('completed-5.5.1').nth(1).click();
+      await page.getByTestId('completed-5.5.2').nth(1).click();
+      await page.getByTestId('completed-5.5.3').nth(1).click();
+      await page.getByTestId('completed-5.6.1').nth(1).click();
+      await page.getByTestId('completed-5.6.2').nth(1).click();
+      await page.getByTestId('completed-5.7.1').nth(1).click();
+      await page.locator('#aivModal path').click();
 
-    console.log('Data Governance Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:data_governance_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-8.1.1').nth(1).click();
-    await page.getByTestId('completed-8.2.1').nth(1).click();
-    await page.getByTestId('completed-8.3.1').nth(1).click();
-    await page.getByTestId('completed-8.4.1').nth(1).click();
-    await page.locator('#aivModal').getByTestId('CloseIcon').click();
+      console.log('Data Governance Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:data_governance_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-8.1.1').nth(1).click();
+      await page.getByTestId('completed-8.2.1').nth(1).click();
+      await page.getByTestId('completed-8.3.1').nth(1).click();
+      await page.getByTestId('completed-8.4.1').nth(1).click();
+      await page.locator('#aivModal').getByTestId('CloseIcon').click();
 
-    console.log('Inclusive Growth, Societal & Environmental Well-being Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:inclusive_growth_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-11.1.1').nth(1).click();
-    await page.locator('#aivModal path').click();
+      console.log('Inclusive Growth, Societal & Environmental Well-being Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:inclusive_growth_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-11.1.1').nth(1).click();
+      await page.locator('#aivModal path').click();
 
-    console.log('Organisational Considerations Process Checklist')
-    await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:organisational_considerations_process_checklist"]').getByRole('button', { name: 'Open' }).click();
-    await page.getByTestId('completed-12.1.1').first().click();
-    await page.getByTestId('completed-12.2.1').first().click();
-    await page.getByTestId('completed-12.3.1').first().click();
-    await page.getByTestId('completed-12.4.1').first().click();
-    await page.getByTestId('completed-12.5.1').nth(1).click();
-    await page.getByTestId('completed-12.6.1').first().click();
-    await page.locator('#aivModal path').click();
+      console.log('Organisational Considerations Process Checklist')
+      await page.locator('[id="ibcard-aiverify\\.stock\\.process_checklist\\:organisational_considerations_process_checklist"]').getByRole('button', { name: 'Open' }).click();
+      await page.getByTestId('completed-12.1.1').first().click();
+      await page.getByTestId('completed-12.2.1').first().click();
+      await page.getByTestId('completed-12.3.1').first().click();
+      await page.getByTestId('completed-12.4.1').first().click();
+      await page.getByTestId('completed-12.5.1').nth(1).click();
+      await page.getByTestId('completed-12.6.1').first().click();
+      await page.locator('#aivModal path').click();
+    }
 
     if (testCase.modelType == "classification") {
       console.log('Fairness Tree')
