@@ -34,18 +34,18 @@ const TESTCASEPARAMS = [
     groundTruth: "default",
     labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
   },
-  // {
-  //   port: "5001",
-  //   name: "ALE, PDP and FMTC",
-  //   dataFileName: "sample_bc_credit_data.sav",
-  //   dataFilePath: "./fixtures/sample_bc_credit_data.sav",
-  //   modelFileName: "Classification 1",
-  //   groundTruthFileName: "sample_bc_credit_data.sav",
-  //   groundTruthFilePath: "./fixtures/sample_bc_credit_data.sav",
-  //   modelType: "classification",
-  //   groundTruth: "default",
-  //   labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
-  // }
+  {
+    port: "5001",
+    name: "ALE, PDP and FMTC",
+    dataFileName: "sample_bc_credit_data.sav",
+    dataFilePath: "./fixtures/sample_bc_credit_data.sav",
+    modelFileName: "Classification 1",
+    groundTruthFileName: "sample_bc_credit_data.sav",
+    groundTruthFilePath: "./fixtures/sample_bc_credit_data.sav",
+    modelType: "classification",
+    groundTruth: "default",
+    labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
+  }
 ]
 
 TESTCASEPARAMS.forEach(testCase =>
