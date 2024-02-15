@@ -12,7 +12,7 @@ test.use({
 const TESTCASEPARAMS = [
   {
     port: "5001",
-    name: "ALE, PDP and FMTC",
+    name: "Classification 1",
     dataFileName: "sample_bc_credit_data.sav",
     dataFilePath: "./fixtures/sample_bc_credit_data.sav",
     modelFileName: "Classification 1",
@@ -24,7 +24,7 @@ const TESTCASEPARAMS = [
   },
   {
     port: "5001",
-    name: "Classification 1",
+    name: "ALE, PDP and FMTC",
     dataFileName: "sample_bc_credit_data.sav",
     dataFilePath: "./fixtures/sample_bc_credit_data.sav",
     modelFileName: "Classification 1",
