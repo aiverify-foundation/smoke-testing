@@ -165,6 +165,7 @@ TESTCASEPARAMS.forEach(testCase =>
     }
     else {
       await page.getByText('Next').click();
+      await page.getByText('Next').click();
     }
 
     console.log('Select Dataset & Ground Truth')
