@@ -11,16 +11,16 @@ test.use({
 
 const TESTCASEPARAMS = [
   {
-    port: "5000",
-    name: "Regression 2",
-    dataFileName: "sample_reg_donation_data.sav",
-    dataFilePath: "./fixtures/sample_reg_donation_data.sav",
-    modelFileName: "Regression 2",
-    groundTruthFileName: 'sample_reg_donation_data.sav',
-    groundTruthFilePath: "./fixtures/sample_reg_donation_data.sav",
-    modelType: "regression",
-    groundTruth: "donation",
-    labels: ["age", "gender", "race", "income", "employment", "employment_length", "total_donated", "num_donation"]
+    port: "5001",
+    name: "ALE, PDP and FMTC",
+    dataFileName: "sample_bc_credit_data.sav",
+    dataFilePath: "./fixtures/sample_bc_credit_data.sav",
+    modelFileName: "Classification 1",
+    groundTruthFileName: "sample_bc_credit_data.sav",
+    groundTruthFilePath: "./fixtures/sample_bc_credit_data.sav",
+    modelType: "classification",
+    groundTruth: "default",
+    labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
   },
   {
     port: "5001",
@@ -35,17 +35,17 @@ const TESTCASEPARAMS = [
     labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
   },
   {
-    port: "5001",
-    name: "ALE, PDP and FMTC",
-    dataFileName: "sample_bc_credit_data.sav",
-    dataFilePath: "./fixtures/sample_bc_credit_data.sav",
-    modelFileName: "Classification 1",
-    groundTruthFileName: "sample_bc_credit_data.sav",
-    groundTruthFilePath: "./fixtures/sample_bc_credit_data.sav",
-    modelType: "classification",
-    groundTruth: "default",
-    labels: ["age", "gender", "income", "race", "home_ownership", "prior_count", "loan_amount", "loan_interests"]
-  }
+    port: "5000",
+    name: "Regression 2",
+    dataFileName: "sample_reg_donation_data.sav",
+    dataFilePath: "./fixtures/sample_reg_donation_data.sav",
+    modelFileName: "Regression 2",
+    groundTruthFileName: 'sample_reg_donation_data.sav',
+    groundTruthFilePath: "./fixtures/sample_reg_donation_data.sav",
+    modelType: "regression",
+    groundTruth: "donation",
+    labels: ["age", "gender", "race", "income", "employment", "employment_length", "total_donated", "num_donation"]
+  },
 ]
 
 TESTCASEPARAMS.forEach(testCase =>
