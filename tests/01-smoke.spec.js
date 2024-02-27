@@ -415,6 +415,8 @@ TESTCASEPARAMS.forEach(testCase =>
     ]);
     await page.getByRole('img', { name: 'AI Verify' }).click();
 
+    await browser.close();
+
     console.log('Test Complete & Report Generated')
 
     // console.log('Clean Up')
