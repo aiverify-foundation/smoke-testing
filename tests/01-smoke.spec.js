@@ -61,6 +61,7 @@ TESTCASEPARAMS.forEach(testCase =>
     if (testCase.name != "ALE, PDP and FMTC") {
       console.log('Add Dataset')
       await page.getByText('Models & Data').click();
+      expect.soft(page.getByText('Models & Data')).toBeVisible()
       await page.getByTestId('open-dataset-list-button').locator('span').click();
       await page.getByTestId('add-new-datasets-button').click();
       await page.getByText('Click to Browse').click();
