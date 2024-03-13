@@ -60,12 +60,15 @@ TESTCASEPARAMS.forEach(testCase =>
 
     if (testCase.name != "ALE, PDP and FMTC") {
       console.log('Add Dataset')
-      expect.soft(page.getByText('Models & Data')).toBeVisible()
+      await expect(page.getByText('500')).toBeVisible()
+      await expect(page.getByText('Models & Data')).toBeVisible()
       await page.getByText('Models & Data').click();
       await page.getByTestId('open-dataset-list-button').locator('span').click();
       await page.getByTestId('add-new-datasets-button').click();
       await page.getByText('Click to Browse').click();
       await page.locator("input[name='file-dropbox']").setInputFiles(testCase.dataFilePath);
+      await expect(page.getByText('Axios')).toBeVisible()
+
       await page.getByTestId('upload-datasets-button').click();
       await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
       await page.getByTestId('datasets-back-button').click();
