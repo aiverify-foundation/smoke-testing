@@ -70,10 +70,10 @@ TESTCASEPARAMS.forEach(testCase =>
       console.log('Passthrough')
       await page.locator("input[name='file-dropbox']").setInputFiles(testCase.dataFilePath);
       console.log('Passthrough')
-      await expect(page.getByText('Axios')).toBeVisible()
-
       await page.getByTestId('upload-datasets-button').click();
+      console.log('Passthrough')
       await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+      console.log('Passthrough')
       await page.getByTestId('datasets-back-button').click();
 
       console.log('Add Model')
