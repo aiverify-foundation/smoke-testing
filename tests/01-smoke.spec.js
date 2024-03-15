@@ -61,11 +61,17 @@ TESTCASEPARAMS.forEach(testCase =>
     if (testCase.name != "ALE, PDP and FMTC") {
       console.log('Add Dataset')
       await page.getByText('Models & Data').click();
+      console.log("Passthrough")
       await page.getByTestId('open-dataset-list-button').locator('span').click();
+      console.log("Passthrough")
       await page.getByTestId('add-new-datasets-button').click();
+      console.log("Passthrough")
       await page.getByText('Click to Browse').click();
+      console.log("Passthrough")
       await page.locator("input[name='file-dropbox']").setInputFiles(testCase.dataFilePath);
+      console.log("Passthrough")
       await page.getByTestId('upload-datasets-button').click();
+      console.log("Passthrough")
       await page.getByTestId('datasets-back-button').click();
 
       console.log('Add Model')
