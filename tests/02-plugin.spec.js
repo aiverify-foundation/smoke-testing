@@ -445,7 +445,7 @@ test(`Robustness Plugin`, async () => {
 
   console.log('Robustness ToolBox')
   await page.locator('[id="algocard-aiverify\\.stock\\.robustness_toolbox\\:robustness_toolbox"] div').getByRole('button', { name: 'Open' }).click();
-  await page.getByRole('button', { name: 'Annotated ground truth path' }).click();mongodb
+  await page.getByRole('button', { name: 'Annotated ground truth path' }).click();
   await page.getByRole('listbox', { name: 'Annotated ground truth path' }).filter({ hasText: 'sample_bc_credit_data.sav' }).click();
   await page.getByLabel('Name of column containing image file names').click();
   await page.getByLabel('Name of column containing image file names').fill('file_name');
