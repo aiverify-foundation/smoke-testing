@@ -17,18 +17,18 @@ test(`FMTC Plugin`, async () => {
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
 
-  // console.log('Add Model')
-  // await page.getByText('Models & Data').click();
-  // await page.getByTestId('open-model-list-button').locator('span').click();
-  // await page.getByTestId('add-new-models-button').click();
-  // await page.getByText('Upload AI Model').click();
-  // await page.getByTestId('newmodel-next-button').click();
-  // await page.getByText('Click to Browse').click();
+  console.log('Add Model')
+  await page.getByText('Models & Data').click();
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.getByText('Upload AI Model').click();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.getByText('Click to Browse').click();
   // await page.locator("input[name='file']").setInputFiles('./aiverify-test-samples/models/sklearn/1.2.2/multiclass_classification_loan_sklearn.ensemble._bagging.BaggingClassifier.sav');
-  // await page.locator("input[name='file']").setInputFiles('./fixtures/sample_bc_credit_sklearn_linear.LogisticRegression.sav');
-  // await page.getByTestId('upload-models-button').click();
-  // await page.getByRole('button', { name: 'Back to all Models >' }).click();
-  // await page.getByRole('img', { name: 'AI Verify' }).click();
+  await page.locator("input[name='file']").setInputFiles('./fixtures/sample_bc_credit_sklearn_linear.LogisticRegression.sav');
+  await page.getByTestId('upload-models-button').click();
+  await page.getByRole('button', { name: 'Back to all Models >' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
 
   console.log('Create A Project')
   await page.getByTestId('new-project-button').getByText('Create New Project').click();
@@ -212,7 +212,7 @@ test(`FMTR Plugin`, async () => {
   await page.goto('http://127.0.0.1:3000/home');
 
   // console.log('Add Dataset')
-  // await page.getByText('Models & Data').click();
+  await page.getByText('Models & Data').click();
   // await page.getByTestId('open-dataset-list-button').locator('span').click();
   // await page.getByTestId('add-new-datasets-button').click();
   // await page.getByText('Click to Browse').click();
@@ -222,17 +222,18 @@ test(`FMTR Plugin`, async () => {
   // await page.getByTestId('datasets-back-button').click();
 
   // console.log('Add Model')
-  // await page.getByTestId('open-model-list-button').locator('span').click();
-  // await page.getByTestId('add-new-models-button').click();
-  // await page.getByText('Upload AI Model').click();
-  // await page.getByTestId('newmodel-next-button').click();
-  // await page.getByText('Click to Browse').click();
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.getByText('Upload AI Model').click();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.getByText('Click to Browse').click();
   // await page.locator("input[name='file']").setInputFiles('./aiverify-test-samples/models/sklearn/1.2.2/regression_insurance_sklearn.ensemble._forest.ExtraTreesRegressor.sav');
-  // await page.getByRole('button', { name: 'Classification' }).click();
-  // await page.getByRole('option', { name: 'Regression' }).click();
-  // await page.getByTestId('upload-models-button').click();
-  // await page.getByRole('button', { name: 'Back to all Models >' }).click();
-  // await page.getByRole('img', { name: 'AI Verify' }).click();
+  await page.locator("input[name='file']").setInputFiles('./fixtures/sample_reg_donation_sklearn_linear.LogisticRegression.sav');
+  await page.getByRole('button', { name: 'Classification' }).click();
+  await page.getByRole('option', { name: 'Regression' }).click();
+  await page.getByTestId('upload-models-button').click();
+  await page.getByRole('button', { name: 'Back to all Models >' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
 
   console.log('Create A Project')
   await page.getByTestId('new-project-button').getByText('Create New Project').click();
