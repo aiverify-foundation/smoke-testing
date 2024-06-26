@@ -244,6 +244,8 @@ TESTCASEPARAMS.forEach(testCase =>
       await page.getByTestId('completed-1.2.4').nth(1).click();
       await page.getByTestId('completed-1.2.5').nth(1).click();
       await page.getByTestId('completed-1.3.1').nth(1).click();
+      await page.getByTestId('completed-1.4.1').nth(1).click();
+      await page.getByTestId('completed-1.5.1').nth(1).click();
       await page.locator('#aivModal').getByTestId('CloseIcon').click();
 
       console.log('Explainability Process Checklist')
@@ -318,6 +320,9 @@ TESTCASEPARAMS.forEach(testCase =>
       await page.getByTestId('completed-9.4.1').nth(1).click();
       await page.getByTestId('completed-9.5.1').nth(1).click();
       await page.getByTestId('completed-9.5.2').nth(1).click();
+      await page.getByTestId('completed-9.6.1').nth(1).click();
+      await page.getByTestId('completed-9.7.1').nth(1).click();
+      await page.getByTestId('completed-9.8.1').nth(1).click();
       await page.locator('#aivModal').getByTestId('CloseIcon').click();
 
       console.log('Human Agency & Oversight Process Checklist')
@@ -371,6 +376,7 @@ TESTCASEPARAMS.forEach(testCase =>
       await page.getByTestId('completed-12.4.1').first().click();
       await page.getByTestId('completed-12.5.1').nth(1).click();
       await page.getByTestId('completed-12.6.1').first().click();
+      await page.getByTestId('completed-12.7.1').first().click();
       await page.locator('#aivModal path').click();
     }
 
