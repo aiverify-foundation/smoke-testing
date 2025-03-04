@@ -527,7 +527,7 @@ test(`SHAP Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Choose Dataset' }).click();
   await page.getByText('sample_bc_credit_data.sav').click();
   await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByLabel('groundTruthSelect').click();
+  await page.getByLabel('', { exact: true }).click()
   await page.getByRole('option', { name: 'default' }).click();
 
   console.log('Select Model')
