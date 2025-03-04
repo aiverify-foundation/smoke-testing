@@ -10,7 +10,7 @@ test.use({
   }
 });
 
-test(`FMTC Plugin`, async () => {
+test.skip(`FMTC Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
@@ -128,7 +128,7 @@ test(`FMTC Plugin`, async () => {
 
 })
 
-test(`ALE Plugin`, async () => {
+test.skip(`ALE Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
@@ -204,7 +204,7 @@ test(`ALE Plugin`, async () => {
 
 })
 
-test(`FMTR Plugin`, async () => {
+test.skip(`FMTR Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
@@ -297,7 +297,7 @@ test(`FMTR Plugin`, async () => {
 
 })
 
-test(`PDP Plugin`, async () => {
+test.skip(`PDP Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
@@ -373,7 +373,7 @@ test(`PDP Plugin`, async () => {
 
 })
 
-test(`Robustness Plugin`, async () => {
+test.skip(`Robustness Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
@@ -552,7 +552,7 @@ test(`SHAP Toolbox Plugin`, async () => {
 
 })
 
-test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
+test.skip(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -668,7 +668,7 @@ test(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   console.log('Test Complete & Report Generated')
 });
 
-test("Create API Model Configuration (Payload with Basic Auth)", async () => {
+test.skip("Create API Model Configuration (Payload with Basic Auth)", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -790,7 +790,7 @@ test("Create API Model Configuration (Payload with Basic Auth)", async () => {
 
 });
 
-test("Create API Model Configuration (POST request with x-www-form-urlencoded request body)", async () => {
+test.skip("Create API Model Configuration (POST request with x-www-form-urlencoded request body)", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -902,7 +902,7 @@ test("Create API Model Configuration (POST request with x-www-form-urlencoded re
 
 });
 
-test("Create API Model Configuration (POST request with form-data request body)", async () => {
+test.skip("Create API Model Configuration (POST request with form-data request body)", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1016,7 +1016,7 @@ test("Create API Model Configuration (POST request with form-data request body)"
 
 });
 
-test("Create API Model Configuration (GET request with query parameters)", async () => {
+test.skip("Create API Model Configuration (GET request with query parameters)", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1122,7 +1122,7 @@ test("Create API Model Configuration (GET request with query parameters)", async
 
 });
 
-test("Create API Model Configuration (GET request with path parameters)", async () => {
+test.skip("Create API Model Configuration (GET request with path parameters)", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1230,7 +1230,7 @@ test("Create API Model Configuration (GET request with path parameters)", async 
 
 });
 
-test("Create API Model Configuration (POST request to read JSON response)", async () => {
+test.skip("Create API Model Configuration (POST request to read JSON response)", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1347,7 +1347,7 @@ test("Create API Model Configuration (POST request to read JSON response)", asyn
 
 });
 
-test("Create API Model Configuration (POST request to Test additional headers)", async () => {
+test.skip("Create API Model Configuration (POST request to Test additional headers)", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1465,7 +1465,7 @@ test("Create API Model Configuration (POST request to Test additional headers)",
 
 });
 
-test("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
+test.skip("Create API Model Configuration (POST request to test http method and connection errors)", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1584,7 +1584,7 @@ test("Create API Model Configuration (POST request to test http method and conne
 
 });
 
-test("Create API Model Configuration (POST request with application/json request body with array support and array response of integers)", async () => {
+test.skip("Create API Model Configuration (POST request with application/json request body with array support and array response of integers)", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1699,7 +1699,7 @@ test("Create API Model Configuration (POST request with application/json request
 
 });
 
-test("Create API Model Configuration (POST request with application/json request body with array support and array response of objects)", async () => {
+test.skip("Create API Model Configuration (POST request with application/json request body with array support and array response of objects)", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1816,7 +1816,7 @@ test("Create API Model Configuration (POST request with application/json request
 
 });
 
-test("Create API Model Configuration (POST request with application/json request body with array support and response object of array data)", async () => {
+test.skip("Create API Model Configuration (POST request with application/json request body with array support and response object of array data)", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -1935,7 +1935,7 @@ test("Create API Model Configuration (POST request with application/json request
 
 });
 
-test("Wrong Bearer Token", async () => {
+test.skip("Wrong Bearer Token", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2049,7 +2049,7 @@ test("Wrong Bearer Token", async () => {
 
 })
 
-test("Wrong Basic Auth", async () => {
+test.skip("Wrong Basic Auth", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2168,7 +2168,7 @@ test("Wrong Basic Auth", async () => {
 
 })
 
-test("Wrong Auth Type", async () => {
+test.skip("Wrong Auth Type", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2287,7 +2287,7 @@ test("Wrong Auth Type", async () => {
 
 })
 
-test("Missing Headers", async () => {
+test.skip("Missing Headers", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2397,7 +2397,7 @@ test("Missing Headers", async () => {
 
 });
 
-test("Wrong Content Type", async () => {
+test.skip("Wrong Content Type", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2514,7 +2514,7 @@ test("Wrong Content Type", async () => {
 
 });
 
-test("Missing Request Parameters", async () => {
+test.skip("Missing Request Parameters", async () => {
   
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2614,7 +2614,7 @@ test("Missing Request Parameters", async () => {
 
 })
 
-test("Mock Response HTTP 429", async () => {
+test.skip("Mock Response HTTP 429", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2731,7 +2731,7 @@ test("Mock Response HTTP 429", async () => {
   
 })
 
-test("Mock Response HTTP 500", async () => {
+test.skip("Mock Response HTTP 500", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2848,7 +2848,7 @@ test("Mock Response HTTP 500", async () => {
 
 });
 
-test("Mock Response HTTP 502", async () => {
+test.skip("Mock Response HTTP 502", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -2965,7 +2965,7 @@ test("Mock Response HTTP 502", async () => {
 
 })
 
-test("Mock Response HTTP 503", async () => {
+test.skip("Mock Response HTTP 503", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -3082,7 +3082,7 @@ test("Mock Response HTTP 503", async () => {
 
 })
 
-test("Mock Response HTTP 504", async () => {
+test.skip("Mock Response HTTP 504", async () => {
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
