@@ -1,5 +1,5 @@
 // @ts-check
-const { devices } = require('@playwright/test');
+const { defineConfig, devices } = require('@playwright/test');
 
 /**
  * Read environment variables from file.
@@ -18,7 +18,7 @@ const testRailOptions = {
  * @see https://playwright.dev/docs/test-configuration
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
-const config = {
+module.exports = defineConfig({
   testDir: './tests',
   /* Maximum time one test can run for. */
   timeout: 2400000,
@@ -118,4 +118,4 @@ const config = {
   //   command: 'npm run start',
   //   port: 3000,
   // },
-};
+});
