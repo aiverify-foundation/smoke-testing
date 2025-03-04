@@ -557,6 +557,7 @@ test(`SHAP Toolbox Plugin`, async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
+  await context.close();
   await browser.close();
 
   console.log('Test Complete & Report Generated')
