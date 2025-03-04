@@ -612,9 +612,6 @@ test(`Local Shap Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Use Model' }).click();
 
   console.log('Local SHAP ToolBox')
-  // await page.getByRole('button', { name: 'Open' }).click();
-  // expect.soft(page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' })).toBeVisible();
-  // await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
   await page.getByRole('button', { name: 'Open' }).click();
   await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
   await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
@@ -634,7 +631,8 @@ test(`Local Shap Toolbox Plugin`, async () => {
   ]);
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
-  await browser.close();
+  await context.close()
+  await browser.close()
 
   console.log('Test Complete & Report Generated')
 
