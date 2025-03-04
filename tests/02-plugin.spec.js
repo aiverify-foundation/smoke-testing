@@ -612,7 +612,7 @@ test.skip(`Local Shap Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Use Model' }).click();
 
   console.log('Local SHAP ToolBox')
-  await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"] div').getByRole('button', { name: 'Open' }).click();
+  await page.locator('inputs_buttonRow__XdExw').click()
   // await page.getByRole('button', { name: 'Open' }).click();
   await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
   await page.getByLabel('Size of the Background *').click();
