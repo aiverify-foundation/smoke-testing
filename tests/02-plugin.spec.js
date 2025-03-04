@@ -496,7 +496,7 @@ test(`SHAP Toolbox Plugin`, async () => {
   await page.getByText('Click to Browse').click();
   console.log('6')
   // await page.locator("input[name='file']").setInputFiles('./aiverify-test-samples/models/lightgbm/3.3.5/binary_classification_compas_lightgbm.sklearn.LGBMClassifier.sav');
-  await page.locator("input[name='file']").setInputFiles('./fixtures/sample_bc_credit_sklearn_linear.LogisticRegression');
+  await page.locator("input[name='file']").setInputFiles('./fixtures/sample_bc_credit_sklearn_linear.LogisticRegression.sav');
   console.log('7')
   await page.getByTestId('upload-models-button').click();
   console.log('8')
