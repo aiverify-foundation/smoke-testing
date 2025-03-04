@@ -466,7 +466,7 @@ test.skip(`Robustness Plugin`, async () => {
 
 })
 
-test.skip(`SHAP Toolbox Plugin`, async () => {
+test(`SHAP Toolbox Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
