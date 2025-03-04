@@ -564,7 +564,7 @@ test(`SHAP Toolbox Plugin`, async () => {
 
 })
 
-test.skip(`Local Shap Toolbox Plugin`, async () => {
+test(`Local Shap Toolbox Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
