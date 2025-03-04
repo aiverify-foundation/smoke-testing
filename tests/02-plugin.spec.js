@@ -612,16 +612,16 @@ test(`Local Shap Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Use Model' }).click();
 
   console.log('Local SHAP ToolBox')
+  // await page.getByRole('button', { name: 'Open' }).click();
+  // expect.soft(page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' })).toBeVisible();
+  // await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
   await page.getByRole('button', { name: 'Open' }).click();
-  expect.soft(page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' })).toBeVisible();
+  await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
   await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
-  console.log('Inside Local Shap')
-  expect.soft(page.getByLabel('Size of the Background*')).toBeVisible()
-  await page.getByLabel('Size of the Background *').click();
-  await page.getByLabel('Size of the Background *').fill('25');
-  expect.soft(page.getByLabel('Size of the Test Dataset *')).toBeVisible()
-  await page.getByLabel('Size of the Test Dataset *').click();
-  await page.getByLabel('Size of the Test Dataset *').fill('25');
+  await page.getByRole('spinbutton', { name: 'Size of the Background' }).click();
+  await page.getByRole('spinbutton', { name: 'Size of the Background' }).fill('25');
+  await page.getByRole('spinbutton', { name: 'Size of the Test Dataset' }).click();
+  await page.getByRole('spinbutton', { name: 'Size of the Test Dataset' }).fill('25')
   await page.getByRole('button', { name: 'OK' }).click();
   await page.getByText('Next').click();
   await page.getByRole('button', { name: 'Proceed' }).click();
