@@ -473,18 +473,28 @@ test(`SHAP Toolbox Plugin`, async () => {
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:3000/home');
 
-  // console.log('Add Model')
-  // await page.getByText('Models & Data').click();
-  // await page.getByTestId('open-model-list-button').locator('span').click();
-  // await page.getByTestId('add-new-models-button').click();
-  // await page.getByText('Upload AI Model').click();
-  // await page.getByTestId('newmodel-next-button').click();
-  // await page.getByText('Click to Browse').click();
+  console.log('Add Dataset')
+  await page.getByText('Models & Data').click();
+  await page.getByTestId('open-dataset-list-button').locator('span').click();
+  await page.getByTestId('add-new-datasets-button').click();
+  await page.getByText('Click to Browse').click();
+  await page.locator("input[name='file-dropbox']").setInputFiles('./fixtures/sample_bc_credit_data.sav');
+  await page.getByTestId('upload-datasets-button').click();
+  await page.getByRole('button', { name: 'Back to all Datasets >' }).click();
+  await page.getByTestId('datasets-back-button').click();
+
+  console.log('Add Model')
+  await page.getByText('Models & Data').click();
+  await page.getByTestId('open-model-list-button').locator('span').click();
+  await page.getByTestId('add-new-models-button').click();
+  await page.getByText('Upload AI Model').click();
+  await page.getByTestId('newmodel-next-button').click();
+  await page.getByText('Click to Browse').click();
   // await page.locator("input[name='file']").setInputFiles('./aiverify-test-samples/models/lightgbm/3.3.5/binary_classification_compas_lightgbm.sklearn.LGBMClassifier.sav');
-  // await page.locator("input[name='file']").setInputFiles('./fixtures/sample_bc_credit_sklearn_linear.LogisticRegression');
-  // await page.getByTestId('upload-models-button').click();
-  // await page.getByRole('button', { name: 'Back to all Models >' }).click();
-  // await page.getByRole('img', { name: 'AI Verify' }).click();
+  await page.locator("input[name='file']").setInputFiles('./fixtures/sample_bc_credit_sklearn_linear.LogisticRegression');
+  await page.getByTestId('upload-models-button').click();
+  await page.getByRole('button', { name: 'Back to all Models >' }).click();
+  await page.getByRole('img', { name: 'AI Verify' }).click();
 
   console.log('Create A Project')
   await page.getByTestId('new-project-button').getByText('Create New Project').click();
@@ -552,7 +562,7 @@ test(`SHAP Toolbox Plugin`, async () => {
 
 })
 
-test.skip(`Local Shap Toolbox Plugin`, async () => {
+test(`Local Shap Toolbox Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
@@ -577,7 +587,7 @@ test.skip(`Local Shap Toolbox Plugin`, async () => {
 
   console.log('Canvas')
   await page.getByRole('button', { name: 'SHAP Toolbox' }).click();
-  await page.getByText('Local Shap').dragTo(page.locator('div.react-grid-layout'));
+  await page.getByText('Local Explainability Bar Chart').dragTo(page.locator('div.react-grid-layout'));
 
   console.log('Add a page')
   await page.locator('button:nth-child(3)').first().click();
@@ -600,13 +610,13 @@ test.skip(`Local Shap Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Use Model' }).click();
 
   console.log('Local SHAP ToolBox')
-  await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"] div').getByRole('button', { name: 'Open' }).click();
-  await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
+  // await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"] div').getByRole('button', { name: 'Open' }).click();
+  await page.getByRole('button', { name: 'Open' }).click();
   await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
   await page.getByLabel('Size of the Background *').click();
-  await page.getByLabel('Size of the Background *').fill('100');
+  await page.getByLabel('Size of the Background *').fill('25');
   await page.getByLabel('Size of the Test Dataset *').click();
-  await page.getByLabel('Size of the Test Dataset *').fill('100');
+  await page.getByLabel('Size of the Test Dataset *').fill('25');
   await page.getByRole('button', { name: 'OK' }).click();
   await page.getByText('Next').click();
   await page.getByRole('button', { name: 'Proceed' }).click();
