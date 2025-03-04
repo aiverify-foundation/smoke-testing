@@ -527,7 +527,7 @@ test(`SHAP Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Choose Dataset' }).click();
   await page.getByText('sample_bc_credit_data.sav').click();
   await page.getByRole('button', { name: 'Use Dataset' }).click();
-  await page.getByRole('button', { name: '​' }).click();
+  await page.getByLabel('groundTruthSelect').click();
   await page.getByRole('option', { name: 'default' }).click();
 
   console.log('Select Model')
@@ -540,6 +540,7 @@ test(`SHAP Toolbox Plugin`, async () => {
   await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"] div').getByRole('button', { name: 'Open' }).click();
   await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
   await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
+
   await page.getByLabel('Size of the Background *').click();
   await page.getByLabel('Size of the Background *').fill('100');
   await page.getByLabel('Size of the Test Dataset *').click();
