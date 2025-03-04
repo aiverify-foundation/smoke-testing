@@ -485,15 +485,24 @@ test(`SHAP Toolbox Plugin`, async () => {
 
   console.log('Add Model')
   await page.getByText('Models & Data').click();
+  console.log('1')
   await page.getByTestId('open-model-list-button').locator('span').click();
+  console.log('2')
   await page.getByTestId('add-new-models-button').click();
+  console.log('3')
   await page.getByText('Upload AI Model').click();
+  console.log('4')
   await page.getByTestId('newmodel-next-button').click();
+  console.log('5')
   await page.getByText('Click to Browse').click();
+  console.log('6')
   // await page.locator("input[name='file']").setInputFiles('./aiverify-test-samples/models/lightgbm/3.3.5/binary_classification_compas_lightgbm.sklearn.LGBMClassifier.sav');
   await page.locator("input[name='file']").setInputFiles('./fixtures/sample_bc_credit_sklearn_linear.LogisticRegression');
+  console.log('7')
   await page.getByTestId('upload-models-button').click();
+  console.log('8')
   await page.getByRole('button', { name: 'Back to all Models >' }).click();
+  console.log('9')
   await page.getByRole('img', { name: 'AI Verify' }).click();
 
   console.log('Create A Project')
