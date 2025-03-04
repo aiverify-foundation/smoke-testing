@@ -608,7 +608,7 @@ test(`Local Shap Toolbox Plugin`, async () => {
 
   console.log('Select Model')
   await page.getByRole('button', { name: 'Choose Model' }).click();
-  await page.getByText('sample_bc_credit_sklearn_linear.LogisticRegression_.sav').click();
+  await page.getByText('sample_bc_credit_sklearn_linear.LogisticRegression.sav').click();
   await page.getByRole('button', { name: 'Use Model' }).click();
 
   console.log('Local SHAP ToolBox')
