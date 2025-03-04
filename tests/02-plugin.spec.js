@@ -484,7 +484,6 @@ test(`SHAP Toolbox Plugin`, async () => {
   await page.getByTestId('datasets-back-button').click();
 
   console.log('Add Model')
-  await page.getByText('Models & Data').click();
   console.log('1')
   await page.getByTestId('open-model-list-button').locator('span').click();
   console.log('2')
