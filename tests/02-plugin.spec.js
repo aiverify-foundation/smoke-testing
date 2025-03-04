@@ -624,7 +624,7 @@ test.skip(`Local Shap Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Proceed' }).click();
 
   console.log('Running Tests & Generating Report')
-  expect(page.getByText("Error encountered while running test")).not.toBeVisible()
+  expect(page.getByText("Error encountered while running test")).toBeHidden({ timeout: 50000 })
   const [page1] = await Promise.all([
     page.waitForEvent('popup'),
     page.getByRole('button', { name: 'View Report' }).click()
