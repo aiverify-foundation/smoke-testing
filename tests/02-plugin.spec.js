@@ -582,7 +582,7 @@ test(`Local Shap Toolbox Plugin`, async () => {
   await page.getByPlaceholder('Enter the company name').click();
   await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
   await page.getByText('Next').click();
-
+ 
   console.log('Select Template')
   await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
   await page.getByText('Next').click();
@@ -608,13 +608,15 @@ test(`Local Shap Toolbox Plugin`, async () => {
 
   console.log('Select Model')
   await page.getByRole('button', { name: 'Choose Model' }).click();
-  await page.getByText('sample_bc_credit_sklearn_linear.LogisticRegression.sav').click();
+  await page.getByText('sample_bc_credit_sklearn_linear.LogisticRegression_.sav').click();
   await page.getByRole('button', { name: 'Use Model' }).click();
 
   console.log('Local SHAP ToolBox')
-  await page.locator('inputs_buttonRow__XdExw').click()
+  expect.soft(page.getByText('Open')).toBeVisible();
+  await page.getByText('Open').click();
   // await page.getByRole('button', { name: 'Open' }).click();
   await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
+  console.log('Inside Local Shap')
   await page.getByLabel('Size of the Background *').click();
   await page.getByLabel('Size of the Background *').fill('25');
   await page.getByLabel('Size of the Test Dataset *').click();
