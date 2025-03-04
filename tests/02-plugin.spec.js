@@ -552,6 +552,78 @@ test(`SHAP Toolbox Plugin`, async () => {
 
 })
 
+test.skip(`Local Shap Toolbox Plugin`, async () => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext();
+
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:3000/home');
+
+  console.log('Create A Project')
+  await page.getByTestId('new-project-button').getByText('Create New Project').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').click();
+  await page.getByPlaceholder('Enter name of this project e.g. Credit Scoring Model Tests').fill('Testing the credit model');
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').click();
+  await page.getByPlaceholder('Enter Project Description e.g. To test whether the classification model is fair towards all groups with respect to gender, robust against unexpected input and explainable.').fill('To test how the credit model aligns with the AI Verify Testing Framework');
+  await page.getByPlaceholder('Enter the title to be used for the generated report').click();
+  await page.getByLabel('Report TitleUse Project Name').check();
+  await page.getByPlaceholder('Enter the company name').click();
+  await page.getByPlaceholder('Enter the company name').fill('Fake Company Pte Ltd');
+  await page.getByText('Next').click();
+
+  console.log('Select Template')
+  await page.getByText('Design your own report by dragging widgets onto a blank canvas').click();
+  await page.getByText('Next').click();
+
+  console.log('Canvas')
+  await page.getByRole('button', { name: 'SHAP Toolbox' }).click();
+  await page.getByText('Local Shap').dragTo(page.locator('div.react-grid-layout'));
+
+  console.log('Add a page')
+  await page.locator('button:nth-child(3)').first().click();
+  await page.getByRole('button', { name: 'Add Page' }).click()
+  await page.getByText('Next').click();
+
+  console.log('Select Dataset & Ground Truth')
+  await page.getByRole('button', { name: 'Choose Dataset' }).first().click();
+  await page.getByText('sample_bc_credit_data.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: 'Choose Dataset' }).click();
+  await page.getByText('sample_bc_credit_data.sav').click();
+  await page.getByRole('button', { name: 'Use Dataset' }).click();
+  await page.getByRole('button', { name: '​' }).click();
+  await page.getByRole('option', { name: 'default' }).click();
+
+  console.log('Select Model')
+  await page.getByRole('button', { name: 'Choose Model' }).click();
+  await page.getByText('sample_bc_credit_sklearn_linear.LogisticRegression.sav').click();
+  await page.getByRole('button', { name: 'Use Model' }).click();
+
+  console.log('Local SHAP ToolBox')
+  await page.locator('[id="algocard-aiverify\\.stock\\.shap_toolbox\\:shap_toolbox"] div').getByRole('button', { name: 'Open' }).click();
+  await page.getByRole('button', { name: 'Path of the Background Path ​' }).click();
+  await page.getByRole('option').filter({ hasText: 'sample_bc_credit_data.sav' }).click()
+  await page.getByLabel('Size of the Background *').click();
+  await page.getByLabel('Size of the Background *').fill('100');
+  await page.getByLabel('Size of the Test Dataset *').click();
+  await page.getByLabel('Size of the Test Dataset *').fill('100');
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.getByText('Next').click();
+  await page.getByRole('button', { name: 'Proceed' }).click();
+
+  console.log('Running Tests & Generating Report')
+  const [page1] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.getByRole('button', { name: 'View Report' }).click()
+  ]);
+  await page.getByRole('img', { name: 'AI Verify' }).click();
+
+  await browser.close();
+
+  console.log('Test Complete & Report Generated')
+
+})
+
 test.skip(`Create API Model Configuration (Payload with Bearer Token)`, async () => {
   
   const browser = await chromium.launch();
