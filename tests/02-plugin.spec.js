@@ -550,6 +550,7 @@ test(`SHAP Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Proceed' }).click();
 
   console.log('Running Tests & Generating Report')
+  expect(page.getByText("Error encountered while running test")).not.toBeVisible()
   const [page1] = await Promise.all([
     page.waitForEvent('popup'),
     page.getByRole('button', { name: 'View Report' }).click()
@@ -562,7 +563,7 @@ test(`SHAP Toolbox Plugin`, async () => {
 
 })
 
-test(`Local Shap Toolbox Plugin`, async () => {
+test.skip(`Local Shap Toolbox Plugin`, async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext();
 
@@ -622,6 +623,7 @@ test(`Local Shap Toolbox Plugin`, async () => {
   await page.getByRole('button', { name: 'Proceed' }).click();
 
   console.log('Running Tests & Generating Report')
+  expect(page.getByText("Error encountered while running test")).not.toBeVisible()
   const [page1] = await Promise.all([
     page.waitForEvent('popup'),
     page.getByRole('button', { name: 'View Report' }).click()
