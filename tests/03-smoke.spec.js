@@ -64,6 +64,9 @@ test(`Smoke Test for v2.x`, async () => {
   await page.locator('#sort-dropdown').click()
   await page.getByRole('listitem').filter({ hasText: 'Date (newest to oldest)' }).click()
   expect.soft(await page.locator('.text-lg').first().textContent()).toBe('Result for aiverify_digital_corruptions')
+
+  /* Close Context */
+  await context.close()
   
   /* Close Browser */
   await browser.close()
